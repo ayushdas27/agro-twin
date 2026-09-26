@@ -36,7 +36,12 @@ FARMS_DB = {
         "name": "Green Valley Farm",
         "location": "Coimbatore, Tamil Nadu",
         "area": 2.5,
+        "area_value": 2.5,
+        "area_unit": "Hectares",
+        "area_hectares": 2.5,
         "primary_crop": "Tomato (Solanum lycopersicum)",
+        "custom_crop_name": None,
+        "crop_display_name": "Tomato (Solanum lycopersicum)",
         "crop_variety": "Arka Rakshak (F1 Hybrid)",
         "planting_date": "2026-08-12",
         "soil_type": "Red Sandy Loam",
@@ -56,8 +61,13 @@ class FarmCreateRequest(BaseModel):
     user_id: str
     name: str
     location: str
-    area: float
+    area: float  # normalized hectares (backward compat)
+    area_value: Optional[float] = None
+    area_unit: Optional[str] = "Hectares"  # 'Hectares' or 'Acres'
+    area_hectares: Optional[float] = None
     primary_crop: str
+    custom_crop_name: Optional[str] = None
+    crop_display_name: Optional[str] = None
     crop_variety: str
     planting_date: str
     soil_type: str
@@ -83,6 +93,25 @@ def create_farm(payload: FarmCreateRequest):
     farm_id = f"farm_{payload.user_id}"
     farm_data = payload.dict()
     farm_data["id"] = farm_id
+
+    # Calculate area_hectares if area_value and area_unit are provided
+    if payload.area_value is not None and payload.area_unit:
+        unit = payload.area_unit.strip().lower()
+        if unit in ["acres", "acre"]:
+            calc_hectares = round(payload.area_value * 0.404686, 4)
+        else:
+            calc_hectares = round(payload.area_value, 4)
+        farm_data["area_hectares"] = calc_hectares
+        farm_data["area"] = calc_hectares
+    elif payload.area_hectares is not None:
+        farm_data["area"] = payload.area_hectares
+    else:
+        farm_data["area_hectares"] = payload.area
+
+    # Fallback crop display name
+    if not farm_data.get("crop_display_name"):
+        farm_data["crop_display_name"] = farm_data.get("custom_crop_name") or farm_data.get("primary_crop")
+
     farm_data["sustainability_score"] = 78
     farm_data["crop_health_percent"] = 88
     farm_data["water_efficiency_percent"] = 82

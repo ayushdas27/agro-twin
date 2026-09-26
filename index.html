@@ -760,10 +760,14 @@
         <section id="tab-my-farm" class="tab-content hidden flex flex-col w-full gap-space-lg">
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-xs">
             <div class="flex flex-col">
-              <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Parcel Record #TN-CBE-2026-4A</span>
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold" id="mfParcelLabel">Parcel Record</span>
               <h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">My Farm</h1>
               <p class="font-body-md text-body-md text-on-surface-variant">Registered agronomic parameters, soil taxonomy, and boundary telemetry.</p>
             </div>
+            <button onclick="openEditFarmModal()" class="inline-flex items-center gap-2 px-space-md h-10 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg font-medium hover:bg-primary transition-colors shadow-sm">
+              <span class="material-symbols-outlined text-base">edit</span>
+              <span>Edit Farm Profile</span>
+            </button>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
@@ -776,39 +780,39 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-5 gap-x-6 pt-1">
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Farm Name</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfFarmName">Green Valley Farm</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfFarmName">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Location</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfLocation">Coimbatore, Tamil Nadu</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfLocation">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Area</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfArea">2.5 Hectares</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfArea">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Primary Crop</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfCrop">Tomato (Solanum lycopersicum)</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfCrop">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Cultivar Variety</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfVariety">Arka Rakshak (F1 Hybrid)</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfVariety">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Irrigation Setup</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5">In-line PC Drip (1.6 L/h)</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfIrrigation">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Soil Classification</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfSoil">Red Sandy Loam</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfSoil">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Water Source</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5">Borewell & Farm Pond</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfWaterSource">—</p>
                   </div>
                   <div>
                     <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phenological Stage</span>
-                    <p class="font-body-lg text-body-lg font-semibold text-secondary mt-0.5">Flowering / Fruit Set</p>
+                    <p class="font-body-lg text-body-lg font-semibold text-secondary mt-0.5" id="mfGrowthStage">—</p>
                   </div>
                 </div>
               </div>
@@ -818,20 +822,20 @@
               <div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-sm flex flex-col gap-space-sm">
                 <span class="font-label-sm text-label-sm uppercase font-bold text-secondary">Soil Diagnostics</span>
                 <div class="flex justify-between items-center py-2 border-b border-outline-variant">
-                  <span class="text-sm">Soil pH</span>
-                  <span class="font-bold">6.8 (Neutral)</span>
+                  <span class="text-sm">Optimal Soil pH</span>
+                  <span class="font-bold" id="mfSoilPH">—</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-outline-variant">
-                  <span class="text-sm">Organic Carbon</span>
-                  <span class="font-bold">0.68% (Adequate)</span>
+                  <span class="text-sm">Season</span>
+                  <span class="font-bold" id="mfSeason">—</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-outline-variant">
-                  <span class="text-sm">Available Nitrogen</span>
-                  <span class="font-bold">245 kg/ha</span>
+                  <span class="text-sm">Days to Maturity</span>
+                  <span class="font-bold" id="mfDaysToMaturity">—</span>
                 </div>
                 <div class="flex justify-between items-center py-2">
                   <span class="text-sm">Soil Moisture</span>
-                  <span class="font-bold text-secondary">61%</span>
+                  <span class="font-bold text-secondary" id="mfSoilMoisture">—</span>
                 </div>
               </div>
             </div>
@@ -1020,6 +1024,86 @@
     </div>
   </div>
 
+  <!-- ========================================================== -->
+  <!-- EDIT FARM PROFILE MODAL                                     -->
+  <!-- ========================================================== -->
+  <div id="editFarmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-[#e2e6e2]">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-bold text-[#1e3a2f]">Edit Farm Profile</h2>
+          <button onclick="closeEditFarmModal()" class="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-xl text-gray-500">close</span>
+          </button>
+        </div>
+        <p class="text-sm text-[#5c6660] mt-1">Update your crop, location, or land area. All dashboard metrics will recalculate.</p>
+      </div>
+      <form id="editFarmForm" class="p-6 space-y-5" novalidate onsubmit="event.preventDefault(); saveEditFarm();">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Farm Name -->
+          <div>
+            <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Farm Name</label>
+            <input class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editFarmName" type="text" placeholder="e.g. My Farm"/>
+            <p class="text-red-600 text-[11px] mt-1 hidden" id="editErrName">Farm name is required.</p>
+          </div>
+          <!-- Location -->
+          <div>
+            <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Location</label>
+            <input class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editLocation" type="text" placeholder="e.g. Thanjavur, Tamil Nadu"/>
+            <p class="text-red-600 text-[11px] mt-1 hidden" id="editErrLocation">Location is required.</p>
+          </div>
+        </div>
+        <!-- Area with unit -->
+        <div>
+          <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Total Farm Area</label>
+          <div class="flex gap-3">
+            <input class="flex-1 px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editAreaValue" type="number" step="0.01" min="0.01" placeholder="e.g. 3.2"/>
+            <select class="w-32 px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editAreaUnit">
+              <option value="Hectares">Hectares</option>
+              <option value="Acres">Acres</option>
+            </select>
+          </div>
+          <p class="text-[#6b8f77] text-xs mt-1 font-medium" id="editAreaConversion"></p>
+          <p class="text-red-600 text-[11px] mt-1 hidden" id="editErrArea">Area must be greater than 0.</p>
+        </div>
+        <!-- Primary Crop -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Primary Crop</label>
+            <select class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editCrop"></select>
+            <div id="editCustomCropBox" class="hidden mt-2">
+              <input class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editCustomCropName" type="text" placeholder="e.g. Maize, Banana"/>
+              <p class="text-red-600 text-[11px] mt-1 hidden" id="editErrCustomCrop">Custom crop name is required.</p>
+            </div>
+          </div>
+          <!-- Variety -->
+          <div>
+            <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Crop Variety</label>
+            <input class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editVariety" type="text" placeholder="e.g. Arka Rakshak"/>
+          </div>
+        </div>
+        <!-- Soil & Irrigation -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Soil Classification</label>
+            <select class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editSoilType"></select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#1a221e] mb-1.5">Irrigation Method</label>
+            <select class="w-full px-3 py-2.5 text-sm bg-white border border-[#e2e6e2] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1e3a2f] text-[#1a221e]" id="editIrrigationMethod"></select>
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#e2e6e2]">
+          <button type="button" onclick="closeEditFarmModal()" class="px-4 py-2 text-sm font-medium text-[#5c6660] hover:text-[#1a221e] hover:bg-gray-50 rounded-lg transition-colors">Cancel</button>
+          <button type="submit" class="px-6 py-2.5 bg-[#1e3a2f] hover:bg-[#152921] text-white text-xs font-semibold tracking-wide uppercase rounded-lg shadow-sm transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">save</span>
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- State & Scripts -->
   <script>
     window.IS_AGRO_TWIN_SPA = true;
@@ -1039,7 +1123,7 @@
       const inputNameError = document.getElementById('inputNameError');
       const inputPhoneError = document.getElementById('inputPhoneError');
 
-      // Check current session
+      // ── Session check ──────────────────────────────────
       function checkSession() {
         const user = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
         if (user && user.name) {
@@ -1060,20 +1144,21 @@
         loginView.classList.add('hidden');
         appView.classList.remove('hidden');
 
-        // Populate personalized greetings
         const firstName = user.firstName || user.name.split(/\s+/)[0];
         const greetingHeadline = document.getElementById('greetingHeadline');
         if (greetingHeadline) {
-          const prefix = user.isReturning ? 'Welcome back,' : 'Good morning,';
+          const hour = new Date().getHours();
+          let prefix = 'Good morning,';
+          if (hour >= 12 && hour < 17) prefix = 'Good afternoon,';
+          else if (hour >= 17) prefix = 'Good evening,';
+          if (user.isReturning) prefix = 'Welcome back,';
           greetingHeadline.innerHTML = `${prefix} <span id="greetingUserName">${firstName}</span>`;
         }
 
-        // Initialize header profile dropdown
         if (window.AgroTwinUI) {
           window.AgroTwinUI.initHeaderAndProfile();
         }
 
-        // Load isolated farm data
         loadUserFarmData(user);
       }
 
@@ -1085,7 +1170,7 @@
         inputPhone.classList.remove('border-red-500');
       }
 
-      // Handle login form submission
+      // ── Login form handler ─────────────────────────────
       loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
         hideErrors();
@@ -1131,46 +1216,85 @@
         showDashboard(userProfile);
       });
 
-      // Load User Farm Data
+      // ── Load and display all farm data across tabs ─────
       function loadUserFarmData(user) {
         const farm = window.AgroTwinState.getUserFarm(user.userId);
-        if (farm) {
-          const fn = document.getElementById('appHeaderFarmName');
-          if (fn) fn.textContent = farm.name;
-          const fl = document.getElementById('appHeaderFarmLocation');
-          if (fl) fl.textContent = `${farm.location} · ${farm.area} Hectares`;
-          const pn = document.getElementById('appHeaderParcelName');
-          if (pn) pn.textContent = farm.parcel;
+        if (!farm) return;
 
-          const mfName = document.getElementById('mfFarmName');
-          if (mfName) mfName.textContent = farm.name;
-          const mfLoc = document.getElementById('mfLocation');
-          if (mfLoc) mfLoc.textContent = farm.location;
-          const mfArea = document.getElementById('mfArea');
-          if (mfArea) mfArea.textContent = `${farm.area} Hectares`;
-          const mfCrop = document.getElementById('mfCrop');
-          if (mfCrop) mfCrop.textContent = farm.primaryCrop;
-          const mfVariety = document.getElementById('mfVariety');
-          if (mfVariety) mfVariety.textContent = farm.cropVariety;
-          const mfSoil = document.getElementById('mfSoil');
-          if (mfSoil) mfSoil.textContent = farm.soilType;
+        // Determine display values
+        const cropDisplay = farm.cropDisplayName || farm.primaryCrop || farm.cropName || '—';
+        const areaDisplay = farm.areaValue && farm.areaUnit
+          ? `${farm.areaValue} ${farm.areaUnit} (≈ ${farm.areaHectares || farm.area} ha)`
+          : `${farm.area} Hectares`;
 
-          // Render History Table
-          const historyBody = document.getElementById('historyTableBody');
-          if (historyBody && farm.history) {
-            historyBody.innerHTML = farm.history.map(item => `
-              <tr class="hover:bg-surface-container-low transition-colors">
-                <td class="py-3 px-4 font-mono text-xs text-on-surface-variant">${item.date}</td>
-                <td class="py-3 px-4 font-medium text-on-surface">${item.action}</td>
-                <td class="py-3 px-4 text-secondary font-medium">${item.impact}</td>
-                <td class="py-3 px-4 text-right font-bold text-on-surface">${item.score} / 100</td>
-              </tr>
-            `).join('');
-          }
+        // ── Top App Header ─────────────────────────
+        const fn = document.getElementById('appHeaderFarmName');
+        if (fn) fn.textContent = farm.name || '—';
+        const fl = document.getElementById('appHeaderFarmLocation');
+        if (fl) fl.textContent = `${farm.location || '—'} · ${farm.area} Hectares`;
+        const pn = document.getElementById('appHeaderParcelName');
+        if (pn) pn.textContent = farm.parcel || cropDisplay;
+
+        // ── My Farm Tab ────────────────────────────
+        const mfLabel = document.getElementById('mfParcelLabel');
+        if (mfLabel) mfLabel.textContent = farm.parcel || 'Parcel Record';
+        const mfName = document.getElementById('mfFarmName');
+        if (mfName) mfName.textContent = farm.name || '—';
+        const mfLoc = document.getElementById('mfLocation');
+        if (mfLoc) mfLoc.textContent = farm.location || '—';
+        const mfArea = document.getElementById('mfArea');
+        if (mfArea) mfArea.textContent = areaDisplay;
+        const mfCrop = document.getElementById('mfCrop');
+        if (mfCrop) mfCrop.textContent = cropDisplay;
+        const mfVariety = document.getElementById('mfVariety');
+        if (mfVariety) mfVariety.textContent = farm.cropVariety || '—';
+        const mfIrrigation = document.getElementById('mfIrrigation');
+        if (mfIrrigation) mfIrrigation.textContent = farm.irrigationMethod || '—';
+        const mfSoil = document.getElementById('mfSoil');
+        if (mfSoil) mfSoil.textContent = farm.soilType || '—';
+        const mfWaterSource = document.getElementById('mfWaterSource');
+        if (mfWaterSource) mfWaterSource.textContent = farm.waterSource || '—';
+        const mfGrowthStage = document.getElementById('mfGrowthStage');
+        if (mfGrowthStage) mfGrowthStage.textContent = farm.growthStage || '—';
+
+        // Soil diagnostics
+        const mfSoilPH = document.getElementById('mfSoilPH');
+        if (mfSoilPH) mfSoilPH.textContent = farm.optimalSoilPH || '—';
+        const mfSeason = document.getElementById('mfSeason');
+        if (mfSeason) mfSeason.textContent = farm.season || '—';
+        const mfDays = document.getElementById('mfDaysToMaturity');
+        if (mfDays) mfDays.textContent = farm.daysToMaturity ? farm.daysToMaturity + ' days' : '—';
+        const mfMoisture = document.getElementById('mfSoilMoisture');
+        if (mfMoisture) mfMoisture.textContent = farm.soilMoisture ? farm.soilMoisture + '%' : '—';
+
+        // ── Overview Tab Cards ─────────────────────
+        const dashScore = document.getElementById('dashSustainabilityScore');
+        if (dashScore) dashScore.textContent = farm.sustainabilityScore || 78;
+
+        // ── Simulator: update baseline text ────────
+        const simModelLabel = document.querySelector('#tab-what-if-simulator .px-2\\.5.py-1');
+        if (simModelLabel) {
+          simModelLabel.textContent = `Active Model: ${cropDisplay}`;
+        }
+
+        // Store farm reference for simulator
+        window._currentFarm = farm;
+
+        // ── History Table ──────────────────────────
+        const historyBody = document.getElementById('historyTableBody');
+        if (historyBody && farm.history) {
+          historyBody.innerHTML = farm.history.map(item => `
+            <tr class="hover:bg-surface-container-low transition-colors">
+              <td class="py-3 px-4 font-mono text-xs text-on-surface-variant">${item.date}</td>
+              <td class="py-3 px-4 font-medium text-on-surface">${item.action}</td>
+              <td class="py-3 px-4 text-secondary font-medium">${item.impact}</td>
+              <td class="py-3 px-4 text-right font-bold text-on-surface">${item.score} / 100</td>
+            </tr>
+          `).join('');
         }
       }
 
-      // Expose switch tab and global triggers
+      // ── Tab navigation ─────────────────────────────────
       window.switchTab = function (tabId) {
         const navButtons = document.querySelectorAll('#sidebarNav button.nav-item');
         navButtons.forEach(btn => {
@@ -1186,20 +1310,18 @@
         if (target) target.classList.remove('hidden');
       };
 
-      // Sidebar click listeners
       document.querySelectorAll('#sidebarNav button[data-tab]').forEach(btn => {
         btn.addEventListener('click', function () {
           window.switchTab(this.getAttribute('data-tab'));
         });
       });
 
-      // Quick simulate button
       const quickSim = document.getElementById('btnQuickSimulate');
       if (quickSim) {
         quickSim.addEventListener('click', () => window.switchTab('what-if-simulator'));
       }
 
-      // What-If Simulator Logic in SPA
+      // ── What-If Simulator Logic (crop-aware) ───────────
       const slider = document.getElementById('simIrrigationSlider');
       const readout = document.getElementById('simSliderReadout');
       const btnUp = document.getElementById('simStepUp');
@@ -1207,11 +1329,21 @@
       const presets = document.querySelectorAll('.sim-preset-btn');
 
       window.setSimValue = function (val) {
-        const clamped = Math.max(6, Math.min(20, parseInt(val, 10)));
-        if (slider) slider.value = clamped;
+        const farm = window._currentFarm || {};
+        const baseline = farm.waterNeedBaseline || 10;
+        const minVal = Math.max(2, Math.floor(baseline * 0.4));
+        const maxVal = Math.ceil(baseline * 2.5);
+
+        const clamped = Math.max(minVal, Math.min(maxVal, parseInt(val, 10)));
+        if (slider) {
+          slider.min = minVal;
+          slider.max = maxVal;
+          slider.value = clamped;
+        }
         if (readout) readout.textContent = clamped;
 
-        const res = window.AgroTwinState.calculateSimulation(clamped);
+        const res = window.AgroTwinState.calculateSimulation(clamped, farm);
+
         document.getElementById('spaSimHeaderLiters').textContent = `Simulated (${clamped} L/m²)`;
         document.getElementById('spaSimWaterCell').textContent = `${res.waterUsePercent}%`;
         document.getElementById('spaSimYieldCell').textContent = `${res.yieldPercent}%`;
@@ -1241,6 +1373,16 @@
         rb.textContent = res.riskLabel;
         rb.style.color = res.riskColor;
         rb.style.backgroundColor = res.riskBg;
+
+        // Update baseline column to reflect actual farm baseline
+        const baselineCol = document.querySelector('#tab-what-if-simulator th:nth-child(2)');
+        if (baselineCol) baselineCol.textContent = `Current (${baseline} L/m²)`;
+        const baseCostCol = document.getElementById('spaSimCostCell');
+        // Update baseline row values
+        const baseRow2 = document.querySelector('#tab-what-if-simulator tbody tr:nth-child(3) td:nth-child(2)');
+        if (baseRow2) baseRow2.textContent = `₹${res.baseCost.toLocaleString('en-IN')}`;
+        const baseRow4 = document.querySelector('#tab-what-if-simulator tbody tr:nth-child(4) td:nth-child(2)');
+        if (baseRow4) baseRow4.textContent = `${farm.sustainabilityScore || 78} / 100`;
       };
 
       if (slider) {
@@ -1267,25 +1409,222 @@
           const farm = window.AgroTwinState.getUserFarm(user.userId);
           if (farm) {
             farm.history.unshift({
-              date: 'Just now',
+              date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
               action: `Applied ${liters} L/m² optimal recommendation`,
               impact: 'Water use -12%, cost -₹150',
-              score: 81
+              score: farm.sustainabilityScore || 81
             });
             window.AgroTwinState.saveUserFarm(user.userId, farm);
             loadUserFarmData(user);
-            alert(`Recommendation applied!\n\nSet irrigation schedule to ${liters} L/m².\nRecorded in your Farm Action History.`);
             window.switchTab('history');
           }
         }
+      };
+
+      // ── Edit Farm Modal Logic ──────────────────────────
+      window.openEditFarmModal = function () {
+        const user = window.AgroTwinState.getCurrentUser();
+        if (!user) return;
+        const farm = window.AgroTwinState.getUserFarm(user.userId);
+        if (!farm) return;
+
+        // Populate form fields from current farm data
+        document.getElementById('editFarmName').value = farm.name || '';
+        document.getElementById('editLocation').value = farm.location || '';
+        document.getElementById('editAreaValue').value = farm.areaValue || farm.area || '';
+        document.getElementById('editAreaUnit').value = farm.areaUnit || 'Hectares';
+        document.getElementById('editVariety').value = farm.cropVariety || '';
+
+        // Populate crop dropdown
+        const cropSel = document.getElementById('editCrop');
+        cropSel.innerHTML = '';
+        const cropNames = window.AgroTwinState.getCropNames();
+        cropNames.forEach(name => {
+          if (name === 'Custom / Other') return;
+          const crop = window.AgroTwinState.getCropDetails(name);
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = crop && crop.scientificName !== '—' ? `${name} (${crop.scientificName})` : name;
+          cropSel.appendChild(opt);
+        });
+        const customOpt = document.createElement('option');
+        customOpt.value = '__CUSTOM__';
+        customOpt.textContent = '+ Add Custom Crop';
+        customOpt.style.fontWeight = '600';
+        cropSel.appendChild(customOpt);
+
+        // Set current crop value
+        const farmCropName = farm.cropName || '';
+        const isCustom = farm.customCropName || !cropNames.includes(farmCropName);
+        if (isCustom && farm.customCropName) {
+          cropSel.value = '__CUSTOM__';
+          document.getElementById('editCustomCropBox').classList.remove('hidden');
+          document.getElementById('editCustomCropName').value = farm.customCropName || farm.cropDisplayName || '';
+        } else {
+          // Try to match crop name
+          const matchOpt = Array.from(cropSel.options).find(o => o.value === farmCropName);
+          if (matchOpt) {
+            cropSel.value = farmCropName;
+          }
+          document.getElementById('editCustomCropBox').classList.add('hidden');
+        }
+
+        cropSel.addEventListener('change', function handler() {
+          if (this.value === '__CUSTOM__') {
+            document.getElementById('editCustomCropBox').classList.remove('hidden');
+          } else {
+            document.getElementById('editCustomCropBox').classList.add('hidden');
+            document.getElementById('editCustomCropName').value = '';
+          }
+        });
+
+        // Populate soil dropdown
+        const soilSel = document.getElementById('editSoilType');
+        soilSel.innerHTML = '';
+        window.AgroTwinState.SOIL_TYPES.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s;
+          opt.textContent = s;
+          if (s === farm.soilType) opt.selected = true;
+          soilSel.appendChild(opt);
+        });
+
+        // Populate irrigation dropdown
+        const irrigSel = document.getElementById('editIrrigationMethod');
+        irrigSel.innerHTML = '';
+        window.AgroTwinState.IRRIGATION_METHODS.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m;
+          opt.textContent = m;
+          if (m === farm.irrigationMethod) opt.selected = true;
+          irrigSel.appendChild(opt);
+        });
+
+        // Area conversion
+        const areaInput = document.getElementById('editAreaValue');
+        const areaUnit = document.getElementById('editAreaUnit');
+        const areaConv = document.getElementById('editAreaConversion');
+        function updateConv() {
+          const v = parseFloat(areaInput.value);
+          if (!v || v <= 0) { areaConv.textContent = ''; return; }
+          if (areaUnit.value === 'Hectares') {
+            areaConv.textContent = `≈ ${(v / 0.404686).toFixed(2)} Acres`;
+          } else {
+            areaConv.textContent = `≈ ${(v * 0.404686).toFixed(2)} Hectares`;
+          }
+        }
+        areaInput.addEventListener('input', updateConv);
+        areaUnit.addEventListener('change', updateConv);
+        updateConv();
+
+        // Show modal
+        document.getElementById('editFarmModal').classList.remove('hidden');
+      };
+
+      window.closeEditFarmModal = function () {
+        document.getElementById('editFarmModal').classList.add('hidden');
+        // Clear errors
+        ['editErrName', 'editErrLocation', 'editErrArea', 'editErrCustomCrop'].forEach(id => {
+          document.getElementById(id).classList.add('hidden');
+        });
+      };
+
+      window.saveEditFarm = function () {
+        const user = window.AgroTwinState.getCurrentUser();
+        if (!user) return;
+
+        let hasError = false;
+        ['editErrName', 'editErrLocation', 'editErrArea', 'editErrCustomCrop'].forEach(id => {
+          document.getElementById(id).classList.add('hidden');
+        });
+
+        const farmName = document.getElementById('editFarmName').value.trim();
+        if (!farmName) { document.getElementById('editErrName').classList.remove('hidden'); hasError = true; }
+
+        const location = document.getElementById('editLocation').value.trim();
+        if (!location) { document.getElementById('editErrLocation').classList.remove('hidden'); hasError = true; }
+
+        const areaValue = parseFloat(document.getElementById('editAreaValue').value);
+        const areaUnit = document.getElementById('editAreaUnit').value;
+        if (!areaValue || areaValue <= 0) { document.getElementById('editErrArea').classList.remove('hidden'); hasError = true; }
+
+        const cropVal = document.getElementById('editCrop').value;
+        let cropName = cropVal;
+        let customCropName = '';
+
+        if (cropVal === '__CUSTOM__') {
+          customCropName = document.getElementById('editCustomCropName').value.trim();
+          if (!customCropName) { document.getElementById('editErrCustomCrop').classList.remove('hidden'); hasError = true; }
+          cropName = 'Custom / Other';
+        }
+
+        if (hasError) return;
+
+        // Calculate normalized area
+        let areaHectares = areaValue;
+        if (areaUnit === 'Acres') {
+          areaHectares = parseFloat((areaValue * 0.404686).toFixed(4));
+        }
+
+        const variety = document.getElementById('editVariety').value.trim();
+        const soilType = document.getElementById('editSoilType').value;
+        const irrigationMethod = document.getElementById('editIrrigationMethod').value;
+
+        // Update via state engine
+        const updates = {
+          farmName: farmName,
+          location: location,
+          area: areaHectares,
+          cropName: cropVal === '__CUSTOM__' ? 'Custom / Other' : cropVal,
+          cropVariety: variety,
+          soilType: soilType,
+          irrigationMethod: irrigationMethod
+        };
+
+        const updatedFarm = window.AgroTwinState.updateFarmProfile(user.userId, updates);
+
+        if (updatedFarm) {
+          // Apply custom crop overrides
+          updatedFarm.areaValue = areaValue;
+          updatedFarm.areaUnit = areaUnit;
+          updatedFarm.areaHectares = areaHectares;
+
+          if (cropVal === '__CUSTOM__' && customCropName) {
+            updatedFarm.customCropName = customCropName;
+            updatedFarm.cropDisplayName = customCropName;
+            updatedFarm.primaryCrop = customCropName;
+            updatedFarm.cropName = customCropName;
+            updatedFarm.parcel = customCropName + ' Parcel';
+          } else {
+            updatedFarm.customCropName = '';
+            updatedFarm.cropDisplayName = cropVal;
+          }
+
+          window.AgroTwinState.saveUserFarm(user.userId, updatedFarm);
+          loadUserFarmData(user);
+          window._currentFarm = updatedFarm;
+
+          // Re-run simulator with new farm data
+          const currentSimVal = slider ? parseInt(slider.value, 10) : (updatedFarm.waterNeedBaseline || 10);
+          window.setSimValue(currentSimVal);
+        }
+
+        closeEditFarmModal();
       };
 
       window.showLoginView = showLogin;
 
       // Run initial check
       checkSession();
-      window.setSimValue(14);
+
+      // Init simulator with baseline value from farm
+      setTimeout(() => {
+        const farm = window._currentFarm || {};
+        const baseline = farm.waterNeedBaseline || 10;
+        window.setSimValue(Math.round(baseline * 1.4));
+      }, 100);
     })();
   </script>
 </body>
 </html>
+

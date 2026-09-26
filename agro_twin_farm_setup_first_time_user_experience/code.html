@@ -35,6 +35,18 @@
       background-color: #f7faf6;
       color: #1a221e;
     }
+    .field-error {
+      border-color: #dc2626 !important;
+    }
+    .error-msg {
+      color: #dc2626;
+      font-size: 11px;
+      margin-top: 4px;
+      display: none;
+    }
+    .error-msg.visible {
+      display: block;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -79,34 +91,49 @@
         First-Time User Setup
       </div>
 <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-forest-green">
-        Welcome, <span class="text-forest-green" id="welcomeFirstName">Priya</span>
+        Welcome, <span class="text-forest-green" id="welcomeFirstName">Farmer</span>
 </h1>
 <p class="text-text-muted text-sm sm:text-base mt-1.5">
-        Let’s set up your farm. Register your parcel boundary parameters, soil taxonomy, and crop cycle to calibrate your agronomic twin.
+        Let's set up your farm. Register your parcel boundary parameters, soil taxonomy, and crop cycle to calibrate your agronomic twin.
       </p>
 </div>
 <!-- Farm Setup Card -->
 <div class="bg-white border border-border-subtle rounded-xl p-6 sm:p-8 shadow-sm">
-<form class="space-y-6" id="farmSetupForm" onsubmit="event.preventDefault(); handleFarmCreation();">
+<form class="space-y-6" id="farmSetupForm" novalidate onsubmit="event.preventDefault(); handleFarmCreation();">
 <div class="border-b border-border-subtle pb-4">
 <h2 class="text-sm font-semibold uppercase tracking-wider text-forest-green">1. Farm &amp; Location Details</h2>
 <p class="text-xs text-text-muted mt-0.5">Identifies your management block and localized meteorological station feeds.</p>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<!-- Farm Name -->
 <div>
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Farm Name</label>
-<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmName" placeholder="e.g. Green Valley Farm" required="" type="text" value="Cauvery Delta Organic Farm"/>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmName" placeholder="e.g. Green Valley Farm" type="text" value=""/>
+<p class="error-msg" id="errFarmName">Farm name is required.</p>
 </div>
+<!-- Location -->
 <div>
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Location / Cadastre</label>
-<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmLocation" placeholder="e.g. Coimbatore, Tamil Nadu" required="" type="text" value="Thanjavur, Tamil Nadu"/>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmLocation" placeholder="e.g. Thanjavur, Tamil Nadu" type="text" value=""/>
+<p class="error-msg" id="errFarmLocation">Please enter your farm location (village, town, district, or state).</p>
 </div>
+<!-- Total Farm Area with Unit Selector -->
 <div class="sm:col-span-2">
-<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Total Farm Area (Hectares)</label>
-<div class="relative">
-<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmArea" placeholder="2.5" required="" step="0.1" type="number" value="3.2"/>
-<span class="absolute right-4 top-2.5 text-xs text-text-muted">Hectares (~7.9 Acres)</span>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Total Farm Area</label>
+<div class="flex gap-3 items-start">
+<div class="flex-1 relative">
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmAreaValue" placeholder="e.g. 3.2" step="0.01" min="0.01" type="number" value=""/>
+<p class="error-msg" id="errFarmArea">Please enter a valid area greater than 0.</p>
 </div>
+<div class="w-36">
+<select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmAreaUnit">
+<option value="Hectares" selected>Hectares</option>
+<option value="Acres">Acres</option>
+</select>
+</div>
+</div>
+<!-- Live conversion display -->
+<p class="text-xs text-sage-green mt-1.5 font-medium" id="areaConversionDisplay"></p>
 </div>
 </div>
 <div class="border-b border-border-subtle pb-4 pt-3">
@@ -114,58 +141,91 @@
 <p class="text-xs text-text-muted mt-0.5">Defines the biological growth stage and crop coefficient (Kc) curves.</p>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<!-- Primary Crop (dynamically populated) -->
 <div>
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Primary Crop</label>
 <select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="primaryCrop">
-<option selected="" value="Tomato">Tomato (Solanum lycopersicum)</option>
-<option value="Chili Pepper">Chili Pepper (Capsicum annuum)</option>
-<option value="Cotton">Cotton (Gossypium hirsutum)</option>
-<option value="Sugarcane">Sugarcane (Saccharum officinarum)</option>
-<option value="Paddy">Paddy / Rice (Oryza sativa)</option>
+  <!-- Options populated dynamically from AgroTwinState.getCropNames() -->
 </select>
+<p class="error-msg" id="errPrimaryCrop">Please select a crop.</p>
+<!-- Custom Crop Input (shown only when "+ Add Custom Crop" is selected) -->
+<div id="customCropContainer" class="hidden mt-2">
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Custom Crop Name</label>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="customCropName" placeholder="e.g. Maize, Groundnut, Banana" type="text" value=""/>
+<p class="error-msg" id="errCustomCrop">Please enter your custom crop name.</p>
 </div>
+</div>
+<!-- Crop Variety -->
 <div>
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Crop Cultivar / Variety</label>
-<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="cropVariety" placeholder="e.g. Arka Rakshak" required="" type="text" value="Shivam (Hybrid F1)"/>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="cropVariety" placeholder="e.g. Arka Rakshak, Swarna MTU 7029" type="text" value=""/>
+<p class="error-msg" id="errCropVariety">Please enter the crop variety.</p>
+<!-- Auto-suggestion shown when a known crop is selected -->
+<p class="text-xs text-sage-green mt-1 font-medium" id="varietySuggestion"></p>
 </div>
+<!-- Planting Date -->
 <div>
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Planting / Sowing Date</label>
-<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="plantingDate" required="" type="date" value="2026-09-01"/>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="plantingDate" type="date" value=""/>
+<p class="error-msg" id="errPlantingDate">Please select the planting date.</p>
 </div>
+<!-- Soil Classification (dynamically populated) -->
 <div>
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Soil Classification</label>
 <select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="soilType">
-<option selected="" value="Clay Loam">Clay Loam (Fine textured)</option>
-<option value="Red Sandy Loam">Red Sandy Loam</option>
-<option value="Black Cotton Soil">Black Cotton Soil (Vertisol)</option>
-<option value="Alluvial Silt">Alluvial Silt</option>
+  <!-- Options populated dynamically from AgroTwinState.SOIL_TYPES -->
 </select>
+<p class="error-msg" id="errSoilType">Please select a soil type.</p>
 </div>
+<!-- Irrigation Method (dynamically populated) -->
 <div class="sm:col-span-2">
 <label class="block text-xs font-semibold text-text-charcoal mb-1.5">Irrigation Setup &amp; Method</label>
 <select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="irrigationMethod">
-<option selected="" value="In-line PC Drip System (1.6 L/h emitters)">In-line Pressure Compensating Drip (1.6 L/h emitters)</option>
-<option value="Micro-sprinkler system">Micro-sprinkler system</option>
-<option value="Furrow / Surface Irrigation">Furrow / Surface Irrigation</option>
-<option value="Sub-surface Drip Irrigation (SDI)">Sub-surface Drip Irrigation (SDI)</option>
+  <!-- Options populated dynamically from AgroTwinState.IRRIGATION_METHODS -->
 </select>
+<p class="error-msg" id="errIrrigation">Please select an irrigation method.</p>
+</div>
+</div>
+<!-- Crop Info Card (shown when a known crop is selected) -->
+<div id="cropInfoCard" class="hidden bg-[#f1f4f1] rounded-lg p-4 border border-border-subtle">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-forest-green">Crop Profile</span>
+<span class="text-[10px] bg-white px-2 py-0.5 rounded border border-border-subtle text-text-muted font-mono" id="cropInfoFamily">—</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+<div>
+<span class="text-text-muted block">Water Need</span>
+<span class="font-semibold text-text-charcoal" id="cropInfoWater">—</span>
+</div>
+<div>
+<span class="text-text-muted block">Season</span>
+<span class="font-semibold text-text-charcoal" id="cropInfoSeason">—</span>
+</div>
+<div>
+<span class="text-text-muted block">Days to Maturity</span>
+<span class="font-semibold text-text-charcoal" id="cropInfoDays">—</span>
+</div>
+<div>
+<span class="text-text-muted block">Yield / Ha</span>
+<span class="font-semibold text-text-charcoal" id="cropInfoYield">—</span>
+</div>
 </div>
 </div>
 <!-- Privacy & Isolation Notice -->
-<div class="bg-surface-container-low rounded-lg p-3.5 border border-border-subtle flex items-start gap-3 text-xs text-text-muted">
+<div class="bg-[#f1f4f1] rounded-lg p-3.5 border border-border-subtle flex items-start gap-3 text-xs text-text-muted">
 <svg class="w-4 h-4 text-forest-green flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
 <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
 <div>
-<span class="font-medium text-forest-green">Data Isolation Policy:</span> This farm profile and all linked satellite spectral data and sensor telemetry will be bound strictly to Google User ID <code class="font-mono text-[10px] bg-white px-1.5 py-0.5 rounded border border-border-subtle">user_priya_4410</code>. Other farm managers cannot view or query this parcel.
+<span class="font-medium text-forest-green">Data Isolation Policy:</span> This farm profile and all linked spectral data and sensor telemetry will be bound strictly to your user session (<code class="font-mono text-[10px] bg-white px-1.5 py-0.5 rounded border border-border-subtle" id="privacyUserId">—</code>). Other farm managers cannot view or query this parcel.
           </div>
 </div>
 <!-- Submission Action -->
 <div class="pt-4 flex items-center justify-between border-t border-border-subtle">
-<button class="px-4 py-2 text-xs font-semibold text-text-muted hover:text-text-charcoal hover:bg-surface-container-high rounded-md transition-colors" onclick="handleSignOut()" type="button">
+<button class="px-4 py-2 text-xs font-semibold text-text-muted hover:text-text-charcoal hover:bg-[#f1f4f1] rounded-md transition-colors" onclick="handleSignOut()" type="button">
             Cancel &amp; Sign Out
           </button>
-<button class="px-6 py-2.5 bg-forest-green hover:bg-forest-green-hover text-white text-xs font-semibold tracking-wide uppercase rounded-md shadow-sm transition-all flex items-center gap-2" type="submit">
+<button class="px-6 py-2.5 bg-forest-green hover:bg-forest-green-hover text-white text-xs font-semibold tracking-wide uppercase rounded-md shadow-sm transition-all flex items-center gap-2" type="submit" id="submitBtn">
 <span>Create Your Farm &amp; Launch Twin</span>
 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
 <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -175,59 +235,242 @@
 </form>
 </div>
 </main>
-<script src="../js/agroTwinState.js"></script><script src="../../js/agroTwinState.js"></script>
+<script src="../js/agroTwinState.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const user = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
+      const AS = window.AgroTwinState;
+      if (!AS) { console.error('AgroTwinState not loaded'); return; }
+
+      // ── Populate user info ──────────────────────────────
+      const user = AS.getCurrentUser();
       if (user) {
-        if (user.firstName) {
-          document.getElementById('welcomeFirstName').innerText = user.firstName;
+        if (user.firstName) document.getElementById('welcomeFirstName').innerText = user.firstName;
+        if (user.name) document.getElementById('headerUserName').innerText = user.name;
+        if (user.phone) document.getElementById('headerUserPhone').innerText = user.phone;
+        if (user.initials) document.getElementById('headerUserAvatar').innerText = user.initials;
+        if (user.userId) document.getElementById('privacyUserId').innerText = user.userId;
+      }
+
+      // ── Populate crop dropdown from CROP_DATABASE ───────
+      const cropSelect = document.getElementById('primaryCrop');
+      const cropNames = AS.getCropNames();
+      cropNames.forEach(name => {
+        if (name === 'Custom / Other') return; // we'll add our own custom option
+        const crop = AS.getCropDetails(name);
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = crop && crop.scientificName !== '—'
+          ? `${name} (${crop.scientificName})`
+          : name;
+        cropSelect.appendChild(opt);
+      });
+      // Add "custom" separator
+      const customOpt = document.createElement('option');
+      customOpt.value = '__CUSTOM__';
+      customOpt.textContent = '+ Add Custom Crop';
+      customOpt.style.fontWeight = '600';
+      cropSelect.appendChild(customOpt);
+
+      // ── Populate soil dropdown ──────────────────────────
+      const soilSelect = document.getElementById('soilType');
+      AS.SOIL_TYPES.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        soilSelect.appendChild(opt);
+      });
+
+      // ── Populate irrigation dropdown ────────────────────
+      const irrigSelect = document.getElementById('irrigationMethod');
+      AS.IRRIGATION_METHODS.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        irrigSelect.appendChild(opt);
+      });
+
+      // ── Set today as default planting date ──────────────
+      document.getElementById('plantingDate').value = new Date().toISOString().split('T')[0];
+
+      // ── Area unit conversion logic ──────────────────────
+      const areaInput = document.getElementById('farmAreaValue');
+      const areaUnit = document.getElementById('farmAreaUnit');
+      const areaConv = document.getElementById('areaConversionDisplay');
+
+      function updateAreaConversion() {
+        const val = parseFloat(areaInput.value);
+        if (!val || val <= 0) {
+          areaConv.textContent = '';
+          return;
         }
-        if (user.name) {
-          document.getElementById('headerUserName').innerText = user.name;
-        }
-        if (user.phone) {
-          document.getElementById('headerUserPhone').innerText = user.phone;
-        }
-        if (user.initials) {
-          document.getElementById('headerUserAvatar').innerText = user.initials;
+        if (areaUnit.value === 'Hectares') {
+          const acres = (val / 0.404686).toFixed(2);
+          areaConv.textContent = `≈ ${acres} Acres`;
+        } else {
+          const hectares = (val * 0.404686).toFixed(2);
+          areaConv.textContent = `≈ ${hectares} Hectares`;
         }
       }
+
+      areaInput.addEventListener('input', updateAreaConversion);
+      areaUnit.addEventListener('change', updateAreaConversion);
+
+      // ── Crop selection change handler ───────────────────
+      const customCropContainer = document.getElementById('customCropContainer');
+      const cropInfoCard = document.getElementById('cropInfoCard');
+      const varietySuggestion = document.getElementById('varietySuggestion');
+      const cropVarietyInput = document.getElementById('cropVariety');
+
+      cropSelect.addEventListener('change', function () {
+        const val = this.value;
+        if (val === '__CUSTOM__') {
+          customCropContainer.classList.remove('hidden');
+          cropInfoCard.classList.add('hidden');
+          varietySuggestion.textContent = '';
+        } else {
+          customCropContainer.classList.add('hidden');
+          document.getElementById('customCropName').value = '';
+
+          // Show crop info card
+          const crop = AS.getCropDetails(val);
+          if (crop) {
+            cropInfoCard.classList.remove('hidden');
+            document.getElementById('cropInfoFamily').textContent = crop.family;
+            document.getElementById('cropInfoWater').textContent = crop.waterNeed + ' L/m²';
+            document.getElementById('cropInfoSeason').textContent = crop.season;
+            document.getElementById('cropInfoDays').textContent = crop.daysToMaturity + ' days';
+            document.getElementById('cropInfoYield').textContent = crop.yieldPerHa;
+
+            // Suggest default variety if crop variety field is empty
+            if (!cropVarietyInput.value.trim()) {
+              cropVarietyInput.value = crop.defaultVariety;
+            }
+            varietySuggestion.textContent = `Suggested: ${crop.defaultVariety}`;
+          } else {
+            cropInfoCard.classList.add('hidden');
+            varietySuggestion.textContent = '';
+          }
+        }
+      });
+
+      // Trigger initial crop info for the default selected crop
+      cropSelect.dispatchEvent(new Event('change'));
     });
 
+    // ── Validation helpers ──────────────────────────────
+    function clearAllErrors() {
+      document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('visible'));
+      document.querySelectorAll('.field-error').forEach(e => e.classList.remove('field-error'));
+    }
+
+    function showError(inputId, errorId) {
+      const input = document.getElementById(inputId);
+      const error = document.getElementById(errorId);
+      if (input) input.classList.add('field-error');
+      if (error) error.classList.add('visible');
+    }
+
+    // ── Farm creation handler ───────────────────────────
     function handleFarmCreation() {
-      const user = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
-      const farmName = document.getElementById('farmName').value;
-      const farmLoc = document.getElementById('farmLocation').value;
-      const farmArea = parseFloat(document.getElementById('farmArea').value) || 2.5;
-      const primaryCrop = document.getElementById('primaryCrop').value;
-      const cropVariety = document.getElementById('cropVariety').value;
+      const AS = window.AgroTwinState;
+      const user = AS ? AS.getCurrentUser() : null;
+      clearAllErrors();
+
+      let hasError = false;
+
+      // Farm Name
+      const farmName = document.getElementById('farmName').value.trim();
+      if (!farmName) { showError('farmName', 'errFarmName'); hasError = true; }
+
+      // Location
+      const farmLocation = document.getElementById('farmLocation').value.trim();
+      if (!farmLocation) { showError('farmLocation', 'errFarmLocation'); hasError = true; }
+
+      // Area
+      const areaValue = parseFloat(document.getElementById('farmAreaValue').value);
+      const areaUnit = document.getElementById('farmAreaUnit').value;
+      if (!areaValue || areaValue <= 0) { showError('farmAreaValue', 'errFarmArea'); hasError = true; }
+
+      // Crop
+      const cropSelectVal = document.getElementById('primaryCrop').value;
+      let primaryCrop = cropSelectVal;
+      let customCropName = '';
+      let cropDisplayName = '';
+
+      if (cropSelectVal === '__CUSTOM__') {
+        customCropName = document.getElementById('customCropName').value.trim();
+        if (!customCropName) { showError('customCropName', 'errCustomCrop'); hasError = true; }
+        primaryCrop = 'CUSTOM';
+        cropDisplayName = customCropName;
+      } else {
+        cropDisplayName = cropSelectVal;
+      }
+
+      // Variety
+      const cropVariety = document.getElementById('cropVariety').value.trim();
+      if (!cropVariety) { showError('cropVariety', 'errCropVariety'); hasError = true; }
+
+      // Planting Date
       const plantingDate = document.getElementById('plantingDate').value;
+      if (!plantingDate) { showError('plantingDate', 'errPlantingDate'); hasError = true; }
+
+      // Soil Type
       const soilType = document.getElementById('soilType').value;
+
+      // Irrigation
       const irrigationMethod = document.getElementById('irrigationMethod').value;
 
-      if (user && window.AgroTwinState) {
-        const farmData = {
-          id: 'farm_' + user.userId,
+      if (hasError) {
+        // Scroll to first error
+        const firstErr = document.querySelector('.field-error');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // ── Calculate normalized area ─────────────────────
+      let areaHectares = areaValue;
+      if (areaUnit === 'Acres') {
+        areaHectares = parseFloat((areaValue * 0.404686).toFixed(4));
+      }
+
+      // ── Determine crop name for buildFarmFromCrop ─────
+      // If it's a known crop, use the database; if custom, use 'Custom / Other'
+      const cropKey = primaryCrop === 'CUSTOM' ? 'Custom / Other' : primaryCrop;
+
+      if (user && AS) {
+        // Build farm using the crop knowledge base
+        const farmData = AS.buildFarmFromCrop(cropKey, {
           userId: user.userId,
           name: farmName,
-          location: farmLoc,
-          area: farmArea,
-          primaryCrop: primaryCrop,
-          cropVariety: cropVariety,
-          plantingDate: plantingDate,
+          location: farmLocation,
+          area: areaHectares,
           soilType: soilType,
           irrigationMethod: irrigationMethod,
-          parcel: `Parcel 1 (${primaryCrop})`,
-          sustainabilityScore: 78,
-          cropHealthPercent: 88,
-          waterEfficiencyPercent: 82,
-          weatherRisk: 'Low'
-        };
-        window.AgroTwinState.saveUserFarm(user.userId, farmData);
+          waterSource: 'Borewell & Farm Pond',
+          cropVariety: cropVariety
+        });
+
+        // Overlay custom fields
+        farmData.areaValue = areaValue;
+        farmData.areaUnit = areaUnit;
+        farmData.areaHectares = areaHectares;
+        farmData.area = areaHectares; // backward compat
+        farmData.plantingDate = plantingDate;
+        farmData.customCropName = customCropName;
+        farmData.cropDisplayName = cropDisplayName;
+
+        // Override primary crop display for custom crops
+        if (primaryCrop === 'CUSTOM') {
+          farmData.primaryCrop = customCropName;
+          farmData.cropName = customCropName;
+          farmData.parcel = customCropName + ' Parcel';
+        }
+
+        AS.saveUserFarm(user.userId, farmData);
       }
       
-      window.location.href = '../farm_overview/code.html';
+      // Navigate to main app (index.html) or farm overview
+      window.location.href = '../index.html';
     }
 
     function handleSignOut() {
