@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AGRO-TWIN — Farm Setup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+          },
+          colors: {
+            surface: '#f7faf6',
+            'forest-green': '#1e3a2f',
+            'forest-green-hover': '#152921',
+            'sage-green': '#6b8f77',
+            'border-subtle': '#e2e6e2',
+            'text-charcoal': '#1a221e',
+            'text-muted': '#5c6660',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Geist', sans-serif;
+      background-color: #f7faf6;
+      color: #1a221e;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- Top Navigation matching AGRO-TWIN header -->
+<header class="h-16 bg-white border-b border-border-subtle px-6 flex items-center justify-between sticky top-0 z-30">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-md bg-[#1e3a2f] flex items-center justify-center text-white font-bold text-sm">
+<svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+<path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+</svg>
+</div>
+<div>
+<span class="font-bold tracking-tight text-base text-forest-green">AGRO-TWIN</span>
+<span class="text-[10px] text-text-muted block -mt-1 font-mono">ONBOARDING · v2.4</span>
+</div>
+</div>
+<div class="h-5 w-px bg-border-subtle mx-2"></div>
+<span class="text-xs bg-[#f1f4f1] text-forest-green px-2.5 py-1 rounded font-medium">New Farm Registration</span>
+</div>
+<!-- Authenticated User Profile -->
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<div class="text-xs font-semibold text-text-charcoal leading-tight" id="headerUserName">Farm Manager</div>
+<div class="text-[11px] text-text-muted leading-tight font-mono" id="headerUserPhone">--</div>
+</div>
+<div id="headerUserAvatar" class="w-9 h-9 rounded-full bg-[#1e3a2f] text-white flex items-center justify-center font-bold text-xs border border-border-subtle">AT</div>
+<!-- Logout Icon Action -->
+<button class="p-1.5 text-text-muted hover:text-red-700 hover:bg-red-50 rounded transition-colors ml-1" onclick="handleSignOut()" title="Sign Out">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- Main Setup Form Container -->
+<main class="flex-1 max-w-3xl w-full mx-auto p-6 sm:p-10">
+<div class="mb-8">
+<div class="inline-flex items-center gap-2 text-xs font-medium text-sage-green bg-[#f1f4f1] px-3 py-1 rounded-full mb-3">
+<span class="w-1.5 h-1.5 rounded-full bg-forest-green"></span>
+        First-Time User Setup
+      </div>
+<h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-forest-green">
+        Welcome, <span class="text-forest-green" id="welcomeFirstName">Priya</span>
+</h1>
+<p class="text-text-muted text-sm sm:text-base mt-1.5">
+        Let’s set up your farm. Register your parcel boundary parameters, soil taxonomy, and crop cycle to calibrate your agronomic twin.
+      </p>
+</div>
+<!-- Farm Setup Card -->
+<div class="bg-white border border-border-subtle rounded-xl p-6 sm:p-8 shadow-sm">
+<form class="space-y-6" id="farmSetupForm" onsubmit="event.preventDefault(); handleFarmCreation();">
+<div class="border-b border-border-subtle pb-4">
+<h2 class="text-sm font-semibold uppercase tracking-wider text-forest-green">1. Farm &amp; Location Details</h2>
+<p class="text-xs text-text-muted mt-0.5">Identifies your management block and localized meteorological station feeds.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<div>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Farm Name</label>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmName" placeholder="e.g. Green Valley Farm" required="" type="text" value="Cauvery Delta Organic Farm"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Location / Cadastre</label>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmLocation" placeholder="e.g. Coimbatore, Tamil Nadu" required="" type="text" value="Thanjavur, Tamil Nadu"/>
+</div>
+<div class="sm:col-span-2">
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Total Farm Area (Hectares)</label>
+<div class="relative">
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="farmArea" placeholder="2.5" required="" step="0.1" type="number" value="3.2"/>
+<span class="absolute right-4 top-2.5 text-xs text-text-muted">Hectares (~7.9 Acres)</span>
+</div>
+</div>
+</div>
+<div class="border-b border-border-subtle pb-4 pt-3">
+<h2 class="text-sm font-semibold uppercase tracking-wider text-forest-green">2. Agronomic &amp; Crop Baseline</h2>
+<p class="text-xs text-text-muted mt-0.5">Defines the biological growth stage and crop coefficient (Kc) curves.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<div>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Primary Crop</label>
+<select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="primaryCrop">
+<option selected="" value="Tomato">Tomato (Solanum lycopersicum)</option>
+<option value="Chili Pepper">Chili Pepper (Capsicum annuum)</option>
+<option value="Cotton">Cotton (Gossypium hirsutum)</option>
+<option value="Sugarcane">Sugarcane (Saccharum officinarum)</option>
+<option value="Paddy">Paddy / Rice (Oryza sativa)</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Crop Cultivar / Variety</label>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="cropVariety" placeholder="e.g. Arka Rakshak" required="" type="text" value="Shivam (Hybrid F1)"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Planting / Sowing Date</label>
+<input class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="plantingDate" required="" type="date" value="2026-09-01"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Soil Classification</label>
+<select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="soilType">
+<option selected="" value="Clay Loam">Clay Loam (Fine textured)</option>
+<option value="Red Sandy Loam">Red Sandy Loam</option>
+<option value="Black Cotton Soil">Black Cotton Soil (Vertisol)</option>
+<option value="Alluvial Silt">Alluvial Silt</option>
+</select>
+</div>
+<div class="sm:col-span-2">
+<label class="block text-xs font-semibold text-text-charcoal mb-1.5">Irrigation Setup &amp; Method</label>
+<select class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal" id="irrigationMethod">
+<option selected="" value="In-line PC Drip System (1.6 L/h emitters)">In-line Pressure Compensating Drip (1.6 L/h emitters)</option>
+<option value="Micro-sprinkler system">Micro-sprinkler system</option>
+<option value="Furrow / Surface Irrigation">Furrow / Surface Irrigation</option>
+<option value="Sub-surface Drip Irrigation (SDI)">Sub-surface Drip Irrigation (SDI)</option>
+</select>
+</div>
+</div>
+<!-- Privacy & Isolation Notice -->
+<div class="bg-surface-container-low rounded-lg p-3.5 border border-border-subtle flex items-start gap-3 text-xs text-text-muted">
+<svg class="w-4 h-4 text-forest-green flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<div>
+<span class="font-medium text-forest-green">Data Isolation Policy:</span> This farm profile and all linked satellite spectral data and sensor telemetry will be bound strictly to Google User ID <code class="font-mono text-[10px] bg-white px-1.5 py-0.5 rounded border border-border-subtle">user_priya_4410</code>. Other farm managers cannot view or query this parcel.
+          </div>
+</div>
+<!-- Submission Action -->
+<div class="pt-4 flex items-center justify-between border-t border-border-subtle">
+<button class="px-4 py-2 text-xs font-semibold text-text-muted hover:text-text-charcoal hover:bg-surface-container-high rounded-md transition-colors" onclick="handleSignOut()" type="button">
+            Cancel &amp; Sign Out
+          </button>
+<button class="px-6 py-2.5 bg-forest-green hover:bg-forest-green-hover text-white text-xs font-semibold tracking-wide uppercase rounded-md shadow-sm transition-all flex items-center gap-2" type="submit">
+<span>Create Your Farm &amp; Launch Twin</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</form>
+</div>
+</main>
+<script src="../js/agroTwinState.js"></script><script src="../../js/agroTwinState.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
+      if (user) {
+        if (user.firstName) {
+          document.getElementById('welcomeFirstName').innerText = user.firstName;
+        }
+        if (user.name) {
+          document.getElementById('headerUserName').innerText = user.name;
+        }
+        if (user.phone) {
+          document.getElementById('headerUserPhone').innerText = user.phone;
+        }
+        if (user.initials) {
+          document.getElementById('headerUserAvatar').innerText = user.initials;
+        }
+      }
+    });
+
+    function handleFarmCreation() {
+      const user = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
+      const farmName = document.getElementById('farmName').value;
+      const farmLoc = document.getElementById('farmLocation').value;
+      const farmArea = parseFloat(document.getElementById('farmArea').value) || 2.5;
+      const primaryCrop = document.getElementById('primaryCrop').value;
+      const cropVariety = document.getElementById('cropVariety').value;
+      const plantingDate = document.getElementById('plantingDate').value;
+      const soilType = document.getElementById('soilType').value;
+      const irrigationMethod = document.getElementById('irrigationMethod').value;
+
+      if (user && window.AgroTwinState) {
+        const farmData = {
+          id: 'farm_' + user.userId,
+          userId: user.userId,
+          name: farmName,
+          location: farmLoc,
+          area: farmArea,
+          primaryCrop: primaryCrop,
+          cropVariety: cropVariety,
+          plantingDate: plantingDate,
+          soilType: soilType,
+          irrigationMethod: irrigationMethod,
+          parcel: `Parcel 1 (${primaryCrop})`,
+          sustainabilityScore: 78,
+          cropHealthPercent: 88,
+          waterEfficiencyPercent: 82,
+          weatherRisk: 'Low'
+        };
+        window.AgroTwinState.saveUserFarm(user.userId, farmData);
+      }
+      
+      window.location.href = '../farm_overview/code.html';
+    }
+
+    function handleSignOut() {
+      if (window.AgroTwinState) {
+        window.AgroTwinState.clearSession();
+      }
+      window.location.href = '../agro_twin_sign_in_with_google/code.html';
+    }
+  </script>
+</body>
+</html>

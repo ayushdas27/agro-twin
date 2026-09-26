@@ -1,0 +1,28 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Build and runtime artifacts
+dist/
+build/
+.cache/
+*.log
+
+# Large media & docs
+*.mp4
+*.docx
+stitch_agro_twin_farm_decision_platform/
+
+# OS metadata
+.DS_Store
+Thumbs.db

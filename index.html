@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>AGRO-TWIN — Predict. Simulate. Optimize. Sustain.</title>
+  <!-- Material Symbols & Geist Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface-variant": "#424844",
+            "on-primary-fixed": "#032017",
+            "on-primary": "#ffffff",
+            "on-tertiary-container": "#43a5ea",
+            "surface-variant": "#e0e3e0",
+            "outline": "#727974",
+            "on-primary-fixed-variant": "#304c41",
+            "inverse-primary": "#aecebe",
+            "primary-container": "#1e3a2f",
+            "primary": "#07241a",
+            "tertiary-container": "#003858",
+            "outline-variant": "#c1c8c3",
+            "on-secondary-fixed": "#002111",
+            "on-tertiary-fixed-variant": "#004b73",
+            "surface-container-low": "#f1f4f1",
+            "primary-fixed": "#caeada",
+            "surface-container-high": "#e6e9e5",
+            "secondary-container": "#c6ecd1",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed-variant": "#2c4e3a",
+            "tertiary-fixed": "#cce5ff",
+            "error": "#ba1a1a",
+            "surface-dim": "#d8dbd7",
+            "surface-container": "#ecefeb",
+            "on-error": "#ffffff",
+            "surface-bright": "#f7faf6",
+            "tertiary-fixed-dim": "#93ccff",
+            "secondary-fixed-dim": "#aacfb6",
+            "on-background": "#181c1a",
+            "surface-container-highest": "#e0e3e0",
+            "primary-fixed-dim": "#aecebe",
+            "error-container": "#ffdad6",
+            "surface": "#f7faf6",
+            "secondary-fixed": "#c6ecd1",
+            "surface-tint": "#486458",
+            "tertiary": "#002238",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-container": "#4a6c57",
+            "inverse-on-surface": "#eef1ee",
+            "inverse-surface": "#2d312f",
+            "on-tertiary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "secondary": "#446651",
+            "on-surface": "#181c1a",
+            "on-primary-container": "#86a496",
+            "background": "#f7faf6",
+            'forest-green': '#1e3a2f',
+            'forest-green-hover': '#152921',
+            'sage-green': '#6b8f77',
+            'border-subtle': '#e2e6e2',
+            'text-charcoal': '#1a221e',
+            'text-muted': '#5c6660'
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "gutter-lg": "1.5rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "margin-lg": "2rem",
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "margin": "1rem"
+          },
+          fontFamily: {
+            sans: ["Geist", "sans-serif"],
+            "body-sm": ["Geist", "sans-serif"],
+            "body-lg": ["Geist", "sans-serif"],
+            "label-md": ["Geist", "sans-serif"],
+            "headline-md": ["Geist", "sans-serif"],
+            "headline-sm": ["Geist", "sans-serif"],
+            "label-lg": ["Geist", "sans-serif"],
+            "headline-lg": ["Geist", "sans-serif"],
+            "headline-xl-mobile": ["Geist", "sans-serif"],
+            "label-sm": ["Geist", "sans-serif"],
+            "headline-xl": ["Geist", "sans-serif"],
+            "body-md": ["Geist", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+
+  <!-- ========================================================== -->
+  <!-- 1. LOGIN / ONBOARDING VIEW                                  -->
+  <!-- ========================================================== -->
+  <div id="loginView" class="min-h-screen flex flex-col justify-between p-6 sm:p-10 select-none">
+    <!-- Minimal Top Header -->
+    <header class="w-full max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-md bg-[#1e3a2f] flex items-center justify-center text-white font-bold text-sm shadow-sm">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="font-bold tracking-tight text-lg text-forest-green">AGRO-TWIN</span>
+          <span class="text-xs text-text-muted hidden sm:inline">Predict. Simulate. Sustain.</span>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2 text-xs text-text-muted bg-white border border-border-subtle px-3 py-1.5 rounded-md">
+        <span class="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse"></span>
+        <span>Platform v2.4 Online</span>
+      </div>
+    </header>
+
+    <!-- Login Card Container -->
+    <main class="w-full max-w-[460px] mx-auto my-auto py-10">
+      <div class="bg-white border border-border-subtle rounded-xl p-8 sm:p-10 shadow-[0_4px_20px_-8px_rgba(30,58,47,0.06)]">
+        
+        <!-- Logo & Title Section -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[#1e3a2f] text-white shadow-sm mb-4">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold tracking-tight text-forest-green">Welcome to AGRO-TWIN</h1>
+          <p class="text-sm text-text-muted mt-2">Your intelligent agricultural sustainability companion.</p>
+        </div>
+
+        <!-- Human-readable error banner -->
+        <div id="loginErrorBanner" class="hidden mb-5 p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-red-600">error</span>
+          <span id="loginErrorMessage">Please complete the required fields.</span>
+        </div>
+
+        <!-- Onboarding Form -->
+        <form id="loginForm" class="space-y-5" novalidate>
+          <div>
+            <label for="inputFullName" class="block text-xs font-semibold uppercase tracking-wider text-text-charcoal mb-1.5">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="inputFullName"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal placeholder-text-muted/60 transition-colors"
+            />
+            <p id="inputNameError" class="hidden mt-1 text-xs text-red-600">Please enter your name.</p>
+          </div>
+
+          <div>
+            <label for="inputPhoneNumber" class="block text-xs font-semibold uppercase tracking-wider text-text-charcoal mb-1.5">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              id="inputPhoneNumber"
+              placeholder="Enter your phone number (e.g. 9876543210)"
+              autocomplete="tel"
+              class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal placeholder-text-muted/60 transition-colors"
+            />
+            <p id="inputPhoneError" class="hidden mt-1 text-xs text-red-600">Please enter a valid 10-digit phone number.</p>
+            <p class="mt-1 text-[11px] text-text-muted">Accepts 10-digit Indian mobile number (optional +91).</p>
+          </div>
+
+          <button
+            type="submit"
+            id="loginContinueBtn"
+            class="w-full py-3 px-4 rounded-lg bg-[#1e3a2f] hover:bg-[#152921] text-white font-semibold text-sm tracking-tight transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-forest-green/30 flex items-center justify-center gap-2"
+          >
+            <span>Continue</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </form>
+
+        <!-- Trust Badges -->
+        <div class="mt-8 pt-6 border-t border-border-subtle flex items-center justify-around text-xs text-text-muted">
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-forest-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <span>Isolated Session</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-forest-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <span>Telemetry Protection</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-text-muted border-t border-border-subtle pt-6 gap-3">
+      <div>© 2026 AGRO-TWIN. Predict. Simulate. Optimize. Sustain.</div>
+      <div class="flex items-center gap-4">
+        <span>Agronomic Sustainability Platform</span>
+        <span>·</span>
+        <span>Soil Hydrology & Digital Twin</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- 2. MAIN APPLICATION WORKSPACE VIEW                         -->
+  <!-- ========================================================== -->
+  <div id="appView" class="hidden min-h-screen">
+    <!-- Sidebar Navigation -->
+    <aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant z-40 flex flex-col justify-between select-none">
+      <div class="flex flex-col">
+        <div class="h-16 px-space-md border-b border-outline-variant flex items-center justify-between">
+          <div class="flex items-center gap-space-sm">
+            <div class="w-7 h-7 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-base">agriculture</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-bold leading-none">AGRO-TWIN</span>
+              <span class="font-label-sm text-[10px] text-on-surface-variant leading-tight mt-0.5">Predict · Simulate · Sustain</span>
+            </div>
+          </div>
+          <span class="px-1.5 py-0.5 text-[10px] font-label-sm uppercase bg-surface-container text-on-surface-variant rounded border border-outline-variant font-medium">v2.4</span>
+        </div>
+
+        <div class="px-space-md py-space-sm">
+          <span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-medium tracking-wider px-2">Navigation</span>
+        </div>
+
+        <nav class="flex flex-col gap-1 px-space-sm" id="sidebarNav">
+          <button data-tab="overview" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg transition-colors bg-primary-container text-on-primary font-medium w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">dashboard</span>
+              <span class="font-label-lg text-label-lg">Overview</span>
+            </div>
+          </button>
+
+          <button data-tab="my-farm" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">grid_view</span>
+              <span class="font-label-lg text-label-lg">My Farm</span>
+            </div>
+          </button>
+
+          <button data-tab="farm-health" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">vital_signs</span>
+              <span class="font-label-lg text-label-lg">Farm Health</span>
+            </div>
+          </button>
+
+          <button data-tab="what-if-simulator" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">biotech</span>
+              <span class="font-label-lg text-label-lg">What-If Simulator</span>
+            </div>
+            <span class="px-1.5 py-0.5 text-[10px] font-label-sm bg-secondary-container text-on-secondary-container rounded font-semibold uppercase">Core</span>
+          </button>
+
+          <button data-tab="recommendations" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">lightbulb</span>
+              <span class="font-label-lg text-label-lg">Recommendations</span>
+            </div>
+            <span class="px-2 py-0.5 text-label-sm font-label-sm bg-primary text-on-primary rounded-full font-semibold leading-none">3</span>
+          </button>
+
+          <button data-tab="sustainability" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">eco</span>
+              <span class="font-label-lg text-label-lg">Sustainability</span>
+            </div>
+          </button>
+
+          <button data-tab="history" class="nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-lg">history</span>
+              <span class="font-label-lg text-label-lg">History</span>
+            </div>
+          </button>
+        </nav>
+      </div>
+
+      <div class="flex flex-col border-t border-outline-variant">
+        <nav class="flex flex-col gap-1 px-space-sm pt-space-sm">
+          <button data-tab="settings" class="nav-item flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left">
+            <span class="material-symbols-outlined text-lg">settings</span>
+            <span class="font-label-lg text-label-lg">Settings</span>
+          </button>
+        </nav>
+
+        <div class="p-space-sm mx-space-sm my-space-sm bg-surface-container-low rounded-lg border border-outline-variant flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+            </span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">Sensor sync: Live</span>
+          </div>
+          <span class="font-label-sm text-[10px] text-secondary font-bold uppercase tracking-wider">Online</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Top App Header -->
+    <div class="pl-64">
+      <header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest border-b border-outline-variant z-30 flex items-center justify-between px-space-lg select-none">
+        <div class="flex items-center gap-space-md">
+          <div class="flex flex-col">
+            <div class="flex items-center gap-space-xs">
+              <span class="font-headline-sm text-headline-sm font-bold text-on-surface" id="appHeaderFarmName">Green Valley Farm</span>
+              <span class="material-symbols-outlined text-on-surface-variant text-base cursor-pointer hover:text-on-surface">expand_more</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-on-surface-variant" id="appHeaderFarmLocation">Coimbatore, Tamil Nadu · 2.5 Hectares</span>
+          </div>
+          <div class="h-6 w-px bg-outline-variant hidden sm:block"></div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-high rounded border border-outline-variant">
+            <span class="material-symbols-outlined text-sm text-secondary">layers</span>
+            <span class="font-label-sm text-label-sm font-semibold text-on-surface" id="appHeaderParcelName">Parcel 4A (Tomato)</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-space-lg">
+          <div class="hidden xl:flex items-center gap-space-sm px-space-sm py-1.5 rounded-lg bg-surface-container-low border border-outline-variant">
+            <span class="material-symbols-outlined text-lg text-on-surface-variant">partly_cloudy_day</span>
+            <div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+              <span class="font-medium text-on-surface">31°C</span><span>·</span><span>Partly Cloudy</span><span>·</span><span>Humidity 64%</span><span>·</span><span>Rain prob. 18%</span>
+            </div>
+          </div>
+
+          <div class="h-6 w-px bg-outline-variant"></div>
+
+          <!-- Dynamic Profile Area in Top-Right -->
+          <div id="agroTwinProfileContainer" class="relative"></div>
+        </div>
+      </header>
+
+      <!-- Main Content Tabs Container -->
+      <main class="w-full pt-16 min-h-screen bg-surface px-space-lg py-space-lg">
+        
+        <!-- ============================================== -->
+        <!-- TAB 1: OVERVIEW (Farm Overview)                -->
+        <!-- ============================================== -->
+        <section id="tab-overview" class="tab-content flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md pb-space-xs">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-space-sm mb-1">
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Agronomic Telemetry · Field Overview</span>
+                <span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant">Autumn Cycle 2026</span>
+              </div>
+              <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-bold" id="greetingHeadline">
+                Good morning, <span id="greetingUserName">Rahul</span>
+              </h1>
+              <p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Here is what's happening on your farm today.</p>
+            </div>
+            
+            <div class="flex items-center gap-space-sm">
+              <button class="inline-flex items-center justify-center gap-2 px-space-lg h-10 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg font-medium hover:bg-primary transition-colors shadow-sm" id="btnQuickSimulate">
+                <span class="material-symbols-outlined text-base">biotech</span>
+                <span>Open What-If Simulator</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 METRIC CARDS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+            <!-- Card 1 -->
+            <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low/50 transition-colors">
+              <div class="flex items-center justify-between">
+                <span class="font-label-md text-label-md text-on-surface-variant font-medium uppercase tracking-wider">Sustainability</span>
+                <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">+6 this month</span>
+              </div>
+              <div class="mt-space-md flex items-baseline gap-1.5">
+                <span class="font-headline-xl text-headline-xl font-bold text-on-surface tracking-tight" id="dashSustainabilityScore">78</span>
+                <span class="font-body-md text-body-md text-on-surface-variant">/ 100</span>
+              </div>
+              <div class="mt-space-sm pt-space-sm flex items-center justify-between text-on-surface-variant">
+                <span class="font-body-sm text-body-sm">Top 15% in Coimbatore dist.</span>
+                <span class="material-symbols-outlined text-base text-secondary">workspace_premium</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low/50 transition-colors">
+              <div class="flex items-center justify-between">
+                <span class="font-label-md text-label-md text-on-surface-variant font-medium uppercase tracking-wider">Crop Health</span>
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container">
+                  <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  <span class="font-label-sm text-label-sm font-semibold text-on-surface">Healthy</span>
+                </div>
+              </div>
+              <div class="mt-space-md flex items-baseline gap-1.5">
+                <span class="font-headline-xl text-headline-xl font-bold text-on-surface tracking-tight">87%</span>
+                <span class="font-label-sm text-label-sm text-secondary font-medium uppercase">NDVI 0.76</span>
+              </div>
+              <div class="mt-space-sm pt-space-sm flex items-center justify-between text-on-surface-variant">
+                <span class="font-body-sm text-body-sm">Flowering stage on track</span>
+                <span class="material-symbols-outlined text-base text-secondary">potted_plant</span>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low/50 transition-colors">
+              <div class="flex items-center justify-between">
+                <span class="font-label-md text-label-md text-on-surface-variant font-medium uppercase tracking-wider">Water Efficiency</span>
+                <div class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container">
+                  <span class="font-label-sm text-label-sm font-semibold text-on-surface">Good</span>
+                </div>
+              </div>
+              <div class="mt-space-md flex items-baseline gap-1.5">
+                <span class="font-headline-xl text-headline-xl font-bold text-on-surface tracking-tight">82%</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">target</span>
+              </div>
+              <div class="mt-space-sm pt-space-sm flex items-center justify-between text-on-surface-variant">
+                <span class="font-body-sm text-body-sm">4.2 L/m² saved vs regional</span>
+                <span class="material-symbols-outlined text-base text-secondary">water_drop</span>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:bg-surface-container-low/50 transition-colors">
+              <div class="flex items-center justify-between">
+                <span class="font-label-md text-label-md text-on-surface-variant font-medium uppercase tracking-wider">Weather Risk</span>
+                <div class="inline-flex items-center px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">Low</div>
+              </div>
+              <div class="mt-space-md flex items-baseline gap-2">
+                <span class="font-headline-xl text-headline-xl font-bold text-on-surface tracking-tight">18%</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">rain prob. tomorrow</span>
+              </div>
+              <div class="mt-space-sm pt-space-sm flex items-center justify-between text-on-surface-variant">
+                <span class="font-body-sm text-body-sm">Wind: 11 km/h ENE · 31°C</span>
+                <span class="material-symbols-outlined text-base text-on-surface-variant">air</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TODAY'S STATUS & RECOMMENDATIONS -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
+            <!-- Event stream -->
+            <div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-space-md">
+                <div class="flex items-center gap-space-sm">
+                  <span class="material-symbols-outlined text-secondary text-xl">schedule</span>
+                  <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Today's Farm Status</h3>
+                </div>
+                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Station VLY-4A Auto-Logs</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+                <div class="flex flex-col p-space-md rounded-lg bg-surface-container-low">
+                  <span class="font-label-sm text-label-sm font-mono font-bold text-secondary">08:00</span>
+                  <p class="font-body-md text-body-md text-on-surface font-medium mt-1">Recommended at 06:30 tomorrow</p>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant mt-2">Soil Moisture 61%</span>
+                </div>
+                <div class="flex flex-col p-space-md rounded-lg bg-surface-container-low">
+                  <span class="font-label-sm text-label-sm font-mono font-bold text-secondary">10:30</span>
+                  <p class="font-body-md text-body-md text-on-surface font-medium mt-1">No significant stress detected</p>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant mt-2">Chlorophyll 46.2</span>
+                </div>
+                <div class="flex flex-col p-space-md rounded-lg bg-surface-container-low">
+                  <span class="font-label-sm text-label-sm font-mono font-bold text-secondary">14:00</span>
+                  <p class="font-body-md text-body-md text-on-surface font-medium mt-1">Rain prob. increased to 18%</p>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant mt-2">Expected ~4mm</span>
+                </div>
+              </div>
+              <!-- Farm snapshot summary -->
+              <div class="mt-space-md p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between text-xs text-on-surface-variant">
+                <span>Raised bed open field · Red Sandy Loam</span>
+                <span class="text-secondary font-semibold">Flowering / Fruit Set</span>
+              </div>
+            </div>
+
+            <!-- Current AI Recommendation -->
+            <div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between pb-space-xs">
+                  <span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary-container font-bold uppercase tracking-wider flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">verified</span> Agronomic Action
+                  </span>
+                  <span class="font-label-sm text-label-sm text-secondary font-bold">Confidence 87%</span>
+                </div>
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mt-2">Delay Morning Drip Irrigation</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5 leading-relaxed">
+                  Current root-zone moisture is sufficient (61%). Local meteorological radar projects 4mm precipitation tomorrow afternoon. Holding irrigation avoids waterlogging and saves ₹230 pumping power.
+                </p>
+                <div class="grid grid-cols-2 gap-2 mt-4">
+                  <div class="p-2.5 bg-surface-container-low rounded-lg">
+                    <span class="font-label-sm text-[11px] text-on-surface-variant block">Water Saved</span>
+                    <span class="font-headline-sm text-headline-sm font-bold text-secondary">12%</span>
+                  </div>
+                  <div class="p-2.5 bg-surface-container-low rounded-lg">
+                    <span class="font-label-sm text-[11px] text-on-surface-variant block">Yield Impact</span>
+                    <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Maintained</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pt-4">
+                <button class="w-full py-2.5 px-4 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg font-medium hover:bg-primary transition-colors" onclick="switchTab('what-if-simulator')">
+                  Simulate Irrigation Alterations
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUSTAINABILITY TREND (SVG GRAPH) -->
+          <div class="bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="font-label-sm text-label-sm uppercase font-bold tracking-wider text-secondary">Multi-Criteria Score</span>
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Sustainability Performance Trend</h3>
+              </div>
+              <div class="flex items-center gap-4 text-xs">
+                <div class="flex items-center gap-1.5"><span class="w-3 h-1 bg-[#1E3A2F] rounded"></span><span>Farm Index (78)</span></div>
+                <div class="flex items-center gap-1.5"><span class="w-3 h-0.5 border-t border-dashed border-gray-400"></span><span>District Avg (67)</span></div>
+              </div>
+            </div>
+            <!-- Minimalist Technical SVG Trend Chart -->
+            <div class="w-full overflow-x-auto">
+              <div class="min-w-[680px] h-48 relative">
+                <svg class="w-full h-full" fill="none" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.3" stroke="#C1C8C3" stroke-width="1">
+                    <line x1="45" x2="780" y1="30" y2="30"></line>
+                    <line x1="45" x2="780" y1="80" y2="80"></line>
+                    <line x1="45" x2="780" y1="130" y2="130"></line>
+                    <line x1="45" x2="780" y1="170" y2="170"></line>
+                  </g>
+                  <!-- Baseline 67 -->
+                  <line opacity="0.6" stroke="#727974" stroke-dasharray="4 4" stroke-width="1.5" x1="50" x2="780" y1="125" y2="125"></line>
+                  <text fill="#727974" font-family="Geist, sans-serif" font-size="10" text-anchor="end" x="775" y="120">Baseline 67</text>
+                  <!-- Area Fill -->
+                  <polygon fill="#1E3A2F" fill-opacity="0.08" points="50,150 140,140 240,135 340,115 440,110 540,95 640,88 780,75 780,180 50,180"></polygon>
+                  <!-- Line -->
+                  <polyline fill="none" points="50,150 140,140 240,135 340,115 440,110 540,95 640,88 780,75" stroke="#1E3A2F" stroke-linejoin="round" stroke-width="2.5"></polyline>
+                  <!-- Marker -->
+                  <circle cx="780" cy="75" r="5" fill="#1E3A2F"></circle>
+                  <circle cx="780" cy="75" r="2.5" fill="#FFFFFF"></circle>
+                  <text fill="#1E3A2F" font-family="Geist, sans-serif" font-size="10" font-weight="600" text-anchor="end" x="780" y="65">Today: 78</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 2: WHAT-IF SIMULATOR                       -->
+        <!-- ============================================== -->
+        <section id="tab-what-if-simulator" class="tab-content hidden flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-space-sm mb-1">
+                <h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">What-If Simulator</h1>
+                <span class="px-2.5 py-1 text-label-sm font-label-sm uppercase bg-secondary-container text-on-secondary-container rounded-md font-semibold tracking-wider">
+                  Active Model: Parcel 4A Tomato Crop Cycle
+                </span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Predictive agronomic sandbox. Compare multi-variable interventions before applying physical field execution.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-semibold tracking-wider mr-1">Presets:</span>
+              <button class="sim-preset-btn px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors" data-val="10">Standard Forecast</button>
+              <button class="sim-preset-btn px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface transition-colors" data-val="16">Dry Spell Scenario</button>
+              <button class="sim-preset-btn px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface transition-colors" data-val="8">Rainfall Delay Scenario</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+            <!-- Controls & Moisture -->
+            <div class="lg:col-span-5 flex flex-col gap-space-md">
+              <div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md">
+                <div class="flex items-center justify-between pb-space-sm">
+                  <span class="font-label-sm text-label-sm uppercase font-bold tracking-wider text-on-surface-variant">Step 1 — Choose an Action Variable</span>
+                  <span class="font-label-sm text-label-sm text-secondary font-medium flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">tune</span> Telemetry Linked
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-4 gap-1 p-1 bg-surface-container-low rounded-lg">
+                  <button class="py-2 px-1 text-center rounded bg-primary-container text-on-primary font-label-md text-label-md font-semibold transition-all">Irrigation</button>
+                  <button class="py-2 px-1 text-center rounded text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all">Fertilizer</button>
+                  <button class="py-2 px-1 text-center rounded text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all">Planting</button>
+                  <button class="py-2 px-1 text-center rounded text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all">Strategy</button>
+                </div>
+
+                <div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-2">
+                  <span class="font-label-sm text-label-sm uppercase text-on-surface-variant font-semibold">Active Baseline Telemetry</span>
+                  <div class="flex items-baseline justify-between">
+                    <span class="font-headline-sm text-headline-sm font-bold text-on-surface">10 <span class="font-body-md text-body-md text-on-surface-variant font-normal">L/m² per cycle</span></span>
+                    <span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Drip Baseline (06:00 Daily)</span>
+                  </div>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Scheduled root moisture replenishment configured for Solanaceae vegetative stage.</p>
+                </div>
+
+                <!-- Slider -->
+                <div class="flex flex-col gap-space-sm pt-space-xs">
+                  <div class="flex items-center justify-between">
+                    <label class="font-label-lg text-label-lg font-bold text-on-surface" for="simIrrigationSlider">Simulated Irrigation Volume</label>
+                    <div class="flex items-center gap-1">
+                      <button id="simStepDown" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" type="button">
+                        <span class="material-symbols-outlined text-base">remove</span>
+                      </button>
+                      <span class="font-headline-sm text-headline-sm font-bold text-primary min-w-[3.5rem] text-center" id="simSliderReadout">14</span>
+                      <span class="font-body-sm text-body-sm text-on-surface-variant font-semibold">L/m²</span>
+                      <button id="simStepUp" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" type="button">
+                        <span class="material-symbols-outlined text-base">add</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="relative py-2">
+                    <input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-[#1e3a2f]" id="simIrrigationSlider" max="20" min="6" step="1" type="range" value="14"/>
+                    <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant pt-1">
+                      <span>6 L/m²</span>
+                      <span class="font-semibold text-secondary">10 L (Baseline)</span>
+                      <span>20 L/m²</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Soil Moisture Forecast -->
+                <div class="bg-surface-container-high rounded-xl p-space-md flex flex-col gap-space-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="font-label-sm text-label-sm uppercase font-bold tracking-wider text-on-surface-variant">Soil Moisture Forecast (24h)</span>
+                    <span id="spaSimRiskBadge" class="px-2 py-0.5 rounded text-label-sm font-label-sm font-semibold bg-[#FEF3C7] text-[#D97706]">Slight Waterlogging Risk</span>
+                  </div>
+                  <div class="flex items-baseline gap-2 mt-1">
+                    <span id="spaSimMoistureValue" class="font-headline-lg text-headline-lg font-bold text-on-surface">74%</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Anticipated root zone saturation</span>
+                  </div>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                    Field capacity limit is 70%. When combined with tomorrow's predicted 4mm rain event, anaerobic conditions may occur in furrow bottoms.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Impact Forecast Matrix -->
+            <div class="lg:col-span-7 flex flex-col gap-space-md">
+              <div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md h-full">
+                <div class="flex items-center justify-between pb-space-sm">
+                  <div class="flex flex-col">
+                    <span class="font-label-sm text-label-sm uppercase font-bold tracking-wider text-on-surface-variant">Step 2 — Impact Forecast</span>
+                    <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Simulated Outcome Matrix</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-surface-container text-on-surface font-label-sm text-label-sm rounded-md font-medium">
+                    <span class="w-2 h-2 rounded-full bg-secondary"></span> Confidence 94%
+                  </span>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg">
+                  <table class="w-full text-left">
+                    <thead>
+                      <tr class="bg-surface-container-low font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+                        <th class="py-2.5 px-4 font-semibold">Agronomic Parameter</th>
+                        <th class="py-2.5 px-4 font-semibold text-right">Current (10 L/m²)</th>
+                        <th id="spaSimHeaderLiters" class="py-2.5 px-4 font-semibold text-right">Simulated (14 L/m²)</th>
+                        <th class="py-2.5 px-4 font-semibold text-right">Variance Impact</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y-0 font-body-md text-body-md text-on-surface">
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="py-3 px-4 font-medium flex items-center gap-2">
+                          <span class="material-symbols-outlined text-secondary text-base">water_drop</span> Water Use
+                        </td>
+                        <td class="py-3 px-4 text-right font-medium text-on-surface-variant">100% (Baseline)</td>
+                        <td id="spaSimWaterCell" class="py-3 px-4 text-right font-bold text-on-surface">118%</td>
+                        <td class="py-3 px-4 text-right">
+                          <span id="spaSimWaterBadge" class="inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEE2E2] text-[#DC2626]">+18% (Excessive)</span>
+                        </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="py-3 px-4 font-medium flex items-center gap-2">
+                          <span class="material-symbols-outlined text-secondary text-base">nest_eco_leaf</span> Expected Yield
+                        </td>
+                        <td class="py-3 px-4 text-right font-medium text-on-surface-variant">100%</td>
+                        <td id="spaSimYieldCell" class="py-3 px-4 text-right font-bold text-on-surface">103%</td>
+                        <td class="py-3 px-4 text-right">
+                          <span id="spaSimYieldBadge" class="inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#DCFCE7] text-[#16A34A]">+3% (Marginal)</span>
+                        </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="py-3 px-4 font-medium flex items-center gap-2">
+                          <span class="material-symbols-outlined text-secondary text-base">payments</span> Operational Cost
+                        </td>
+                        <td class="py-3 px-4 text-right font-medium text-on-surface-variant">₹5,000</td>
+                        <td id="spaSimCostCell" class="py-3 px-4 text-right font-bold text-on-surface">₹5,230</td>
+                        <td class="py-3 px-4 text-right">
+                          <span id="spaSimCostBadge" class="inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEF3C7] text-[#D97706]">+₹230 (Pumping)</span>
+                        </td>
+                      </tr>
+                      <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="py-3 px-4 font-medium flex items-center gap-2">
+                          <span class="material-symbols-outlined text-secondary text-base">eco</span> Sustainability Score
+                        </td>
+                        <td class="py-3 px-4 text-right font-medium text-on-surface-variant">78 / 100</td>
+                        <td id="spaSimScoreCell" class="py-3 px-4 text-right font-bold text-on-surface">74 / 100</td>
+                        <td class="py-3 px-4 text-right">
+                          <span id="spaSimScoreBadge" class="inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEE2E2] text-[#DC2626]">-4 pts (Runoff)</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Scenario Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-2">
+                  <div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between">
+                    <div>
+                      <span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant">Scenario B (12 L/m²)</span>
+                      <h4 class="font-headline-sm text-headline-sm font-bold text-on-surface mt-1">Moderate Calibration</h4>
+                      <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Yield 102% · Cost ₹5,080 · Sustainability 81</p>
+                    </div>
+                    <button class="mt-3 py-1.5 px-3 rounded bg-surface-container-high text-on-surface text-xs font-semibold hover:bg-surface-container-highest" onclick="setSimValue(12)">Load 12 L/m²</button>
+                  </div>
+
+                  <div class="p-space-md bg-primary-container text-on-primary rounded-xl flex flex-col justify-between">
+                    <div>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] bg-secondary-container text-on-secondary-container font-bold uppercase">Optimal Policy</span>
+                      <h4 class="font-headline-sm text-headline-sm font-bold text-on-primary mt-1">12 L/m² Protocol</h4>
+                      <p class="font-body-sm text-body-sm text-primary-fixed mt-1">Balances aeration with 4mm rain forecast, saving ₹150.</p>
+                    </div>
+                    <button class="mt-3 py-1.5 px-3 rounded bg-white text-primary text-xs font-bold hover:bg-gray-100" onclick="applyRecommendation(12)">Adopt Recommendation</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 3: MY FARM                                 -->
+        <!-- ============================================== -->
+        <section id="tab-my-farm" class="tab-content hidden flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-xs">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Parcel Record #TN-CBE-2026-4A</span>
+              <h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">My Farm</h1>
+              <p class="font-body-md text-body-md text-on-surface-variant">Registered agronomic parameters, soil taxonomy, and boundary telemetry.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+            <div class="lg:col-span-8 flex flex-col gap-space-lg">
+              <div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-sm flex flex-col gap-space-md">
+                <div class="flex items-center justify-between pb-space-sm border-b border-border-subtle">
+                  <h2 class="font-headline-md text-headline-md text-on-surface">Farm Information & Cadastral Details</h2>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant">Status: Active Cycle</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-5 gap-x-6 pt-1">
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Farm Name</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfFarmName">Green Valley Farm</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Location</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfLocation">Coimbatore, Tamil Nadu</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Area</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfArea">2.5 Hectares</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Primary Crop</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfCrop">Tomato (Solanum lycopersicum)</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Cultivar Variety</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfVariety">Arka Rakshak (F1 Hybrid)</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Irrigation Setup</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5">In-line PC Drip (1.6 L/h)</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Soil Classification</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5" id="mfSoil">Red Sandy Loam</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Water Source</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-on-surface mt-0.5">Borewell & Farm Pond</p>
+                  </div>
+                  <div>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phenological Stage</span>
+                    <p class="font-body-lg text-body-lg font-semibold text-secondary mt-0.5">Flowering / Fruit Set</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col gap-space-md">
+              <div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-sm flex flex-col gap-space-sm">
+                <span class="font-label-sm text-label-sm uppercase font-bold text-secondary">Soil Diagnostics</span>
+                <div class="flex justify-between items-center py-2 border-b border-outline-variant">
+                  <span class="text-sm">Soil pH</span>
+                  <span class="font-bold">6.8 (Neutral)</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-outline-variant">
+                  <span class="text-sm">Organic Carbon</span>
+                  <span class="font-bold">0.68% (Adequate)</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-outline-variant">
+                  <span class="text-sm">Available Nitrogen</span>
+                  <span class="font-bold">245 kg/ha</span>
+                </div>
+                <div class="flex justify-between items-center py-2">
+                  <span class="text-sm">Soil Moisture</span>
+                  <span class="font-bold text-secondary">61%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 4: FARM HEALTH                             -->
+        <!-- ============================================== -->
+        <section id="tab-farm-health" class="tab-content hidden flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-xs">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Diagnostic Telemetry</span>
+              <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-bold">Farm Health</h1>
+              <p class="font-body-md text-body-md text-on-surface-variant">Understand the current physiological condition of your crop canopy and soil.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="font-label-md text-label-md uppercase tracking-wider text-on-surface font-semibold">Crop Health</span>
+                <div class="flex items-baseline gap-2 my-2">
+                  <span class="font-headline-xl text-headline-xl font-bold text-on-surface">87%</span>
+                  <span class="font-body-sm text-body-sm text-secondary font-semibold">NDVI 0.76</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Canopy density and green leaf reflectance within expected parameters.</p>
+              </div>
+            </div>
+
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="font-label-md text-label-md uppercase tracking-wider text-on-surface font-semibold">Water Stress</span>
+                <div class="flex items-baseline gap-2 my-2">
+                  <span class="font-headline-xl text-headline-xl font-bold text-secondary">Low</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">CWSI 0.18</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Transpiration rate is optimal; stomatal conductance healthy.</p>
+              </div>
+            </div>
+
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="font-label-md text-label-md uppercase tracking-wider text-on-surface font-semibold">Nutrient Stress</span>
+                <div class="flex items-baseline gap-2 my-2">
+                  <span class="font-headline-xl text-headline-xl font-bold text-[#D97706]">Moderate</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">Zone 4 Sector</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Minor nitrogen uptake slowdown detected in north furrow corner.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 5: RECOMMENDATIONS                         -->
+        <!-- ============================================== -->
+        <section id="tab-recommendations" class="tab-content hidden flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col pb-space-xs">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Action Planner</span>
+            <h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">Explainable Recommendations</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Generated from current farm state, predictive hydrology, and simulation results.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between border-t-4 border-secondary">
+              <div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-secondary-container text-on-secondary-container">Today</span>
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mt-2">Delay Morning Irrigation</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                  <strong>Why:</strong> Soil moisture is currently adequate (61%) and IMD radar projects 4mm rainfall tomorrow.
+                </p>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                  <strong>Expected Impact:</strong> Water use ↓ 12% · Cost ↓ ₹230 · Yield maintained.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-outline-variant flex justify-between items-center text-xs">
+                <span class="font-bold text-secondary">Confidence 87%</span>
+                <button class="px-3 py-1 bg-primary-container text-on-primary rounded text-xs" onclick="switchTab('what-if-simulator')">Simulate</button>
+              </div>
+            </div>
+
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between border-t-4 border-[#0284C7]">
+              <div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#E0F2FE] text-[#0284C7]">This Week</span>
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mt-2">Inspect Northern Furrow Leaching</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                  <strong>Why:</strong> Multispectral scans indicate slight nitrogen deficiency in parcel 4A north bed.
+                </p>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                  <strong>Expected Impact:</strong> Prevent 4% fruit sizing defect in upcoming fruit set.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-outline-variant flex justify-between items-center text-xs">
+                <span class="font-bold text-secondary">Confidence 91%</span>
+                <button class="px-3 py-1 bg-surface-container text-on-surface rounded text-xs" onclick="switchTab('farm-health')">Inspect</button>
+              </div>
+            </div>
+
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between border-t-4 border-[#D97706]">
+              <div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FEF3C7] text-[#D97706]">This Season</span>
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mt-2">Review Organic Mulch Depth</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+                  <strong>Why:</strong> Evaporative loss peaks during mid-day flowering in dry spells.
+                </p>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                  <strong>Expected Impact:</strong> Enhances root moisture retention by 14% across cycle.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-outline-variant flex justify-between items-center text-xs">
+                <span class="font-bold text-secondary">Confidence 84%</span>
+                <button class="px-3 py-1 bg-surface-container text-on-surface rounded text-xs" onclick="switchTab('sustainability')">Details</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 6: SUSTAINABILITY                          -->
+        <!-- ============================================== -->
+        <section id="tab-sustainability" class="tab-content hidden flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col pb-space-xs">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Ecological Accounting</span>
+            <h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">Sustainability Score Framework</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Configurable multi-objective weighting ensuring sustainable stewardship.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-space-md">
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-center">
+              <span class="font-label-sm text-xs text-on-surface-variant block uppercase font-bold">Water Efficiency (30%)</span>
+              <span class="font-headline-xl text-headline-xl font-bold text-secondary block mt-2">82</span>
+              <span class="text-xs text-on-surface-variant">4.2 L/m² conserved</span>
+            </div>
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-center">
+              <span class="font-label-sm text-xs text-on-surface-variant block uppercase font-bold">Soil Health (25%)</span>
+              <span class="font-headline-xl text-headline-xl font-bold text-secondary block mt-2">80</span>
+              <span class="text-xs text-on-surface-variant">0.68% Organic Carbon</span>
+            </div>
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-center">
+              <span class="font-label-sm text-xs text-on-surface-variant block uppercase font-bold">Yield Efficiency (20%)</span>
+              <span class="font-headline-xl text-headline-xl font-bold text-secondary block mt-2">78</span>
+              <span class="text-xs text-on-surface-variant">Optimal Biomass Index</span>
+            </div>
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-center">
+              <span class="font-label-sm text-xs text-on-surface-variant block uppercase font-bold">Resource / Cost (15%)</span>
+              <span class="font-headline-xl text-headline-xl font-bold text-secondary block mt-2">75</span>
+              <span class="text-xs text-on-surface-variant">Low Leaching Loss</span>
+            </div>
+            <div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-center">
+              <span class="font-label-sm text-xs text-on-surface-variant block uppercase font-bold">Crop Resilience (10%)</span>
+              <span class="font-headline-xl text-headline-xl font-bold text-secondary block mt-2">84</span>
+              <span class="text-xs text-on-surface-variant">Arka Rakshak Triple Res.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- TAB 7: HISTORY                                 -->
+        <!-- ============================================== -->
+        <section id="tab-history" class="tab-content hidden flex flex-col w-full gap-space-lg">
+          <div class="flex flex-col pb-space-xs">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Audit Trail</span>
+            <h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">Farm Action History</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Historical record of applied irrigation, nutrient calibration, and sustainability progression.</p>
+          </div>
+
+          <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="bg-surface-container-low text-xs uppercase tracking-wider font-semibold text-on-surface-variant">
+                  <th class="py-3 px-4">Date</th>
+                  <th class="py-3 px-4">Action Taken</th>
+                  <th class="py-3 px-4">Observed Impact</th>
+                  <th class="py-3 px-4 text-right">Sustainability Index</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody" class="divide-y divide-outline-variant/30 text-sm">
+                <!-- Dynamically populated per user -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- State & Scripts -->
+  <script>
+    window.IS_AGRO_TWIN_SPA = true;
+  </script>
+  <script src="js/agroTwinState.js"></script>
+  <script src="js/agroTwinUI.js"></script>
+
+  <script>
+    (function initApp() {
+      const loginView = document.getElementById('loginView');
+      const appView = document.getElementById('appView');
+      const loginForm = document.getElementById('loginForm');
+      const inputName = document.getElementById('inputFullName');
+      const inputPhone = document.getElementById('inputPhoneNumber');
+      const loginErrorBanner = document.getElementById('loginErrorBanner');
+      const loginErrorMessage = document.getElementById('loginErrorMessage');
+      const inputNameError = document.getElementById('inputNameError');
+      const inputPhoneError = document.getElementById('inputPhoneError');
+
+      // Check current session
+      function checkSession() {
+        const user = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
+        if (user && user.name) {
+          showDashboard(user);
+        } else {
+          showLogin();
+        }
+      }
+
+      function showLogin() {
+        loginView.classList.remove('hidden');
+        appView.classList.add('hidden');
+        loginForm.reset();
+        hideErrors();
+      }
+
+      function showDashboard(user) {
+        loginView.classList.add('hidden');
+        appView.classList.remove('hidden');
+
+        // Populate personalized greetings
+        const firstName = user.firstName || user.name.split(/\s+/)[0];
+        const greetingHeadline = document.getElementById('greetingHeadline');
+        if (greetingHeadline) {
+          const prefix = user.isReturning ? 'Welcome back,' : 'Good morning,';
+          greetingHeadline.innerHTML = `${prefix} <span id="greetingUserName">${firstName}</span>`;
+        }
+
+        // Initialize header profile dropdown
+        if (window.AgroTwinUI) {
+          window.AgroTwinUI.initHeaderAndProfile();
+        }
+
+        // Load isolated farm data
+        loadUserFarmData(user);
+      }
+
+      function hideErrors() {
+        loginErrorBanner.classList.add('hidden');
+        inputNameError.classList.add('hidden');
+        inputPhoneError.classList.add('hidden');
+        inputName.classList.remove('border-red-500');
+        inputPhone.classList.remove('border-red-500');
+      }
+
+      // Handle login form submission
+      loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        hideErrors();
+
+        const nameVal = inputName.value;
+        const phoneVal = inputPhone.value;
+
+        const valRes = window.AgroTwinState.validate(nameVal, phoneVal);
+        if (!valRes.valid) {
+          loginErrorBanner.classList.remove('hidden');
+          loginErrorMessage.textContent = valRes.message;
+          if (valRes.message.includes('name')) {
+            inputNameError.classList.remove('hidden');
+            inputName.classList.add('border-red-500');
+            inputName.focus();
+          } else {
+            inputPhoneError.classList.remove('hidden');
+            inputPhone.classList.add('border-red-500');
+            inputPhone.focus();
+          }
+          return;
+        }
+
+        const fullName = valRes.name;
+        const cleanPhone = valRes.phone;
+        const firstName = fullName.split(/\s+/)[0];
+        const userId = 'usr_' + cleanPhone;
+
+        const userProfile = {
+          userId: userId,
+          name: fullName,
+          firstName: firstName,
+          phone: cleanPhone,
+          initials: window.AgroTwinState.getInitials(fullName),
+          createdAt: new Date().toISOString(),
+          isReturning: false
+        };
+
+        window.AgroTwinState.setCurrentUser(userProfile);
+        userProfile.isReturning = true;
+        window.AgroTwinState.setCurrentUser(userProfile);
+
+        showDashboard(userProfile);
+      });
+
+      // Load User Farm Data
+      function loadUserFarmData(user) {
+        const farm = window.AgroTwinState.getUserFarm(user.userId);
+        if (farm) {
+          const fn = document.getElementById('appHeaderFarmName');
+          if (fn) fn.textContent = farm.name;
+          const fl = document.getElementById('appHeaderFarmLocation');
+          if (fl) fl.textContent = `${farm.location} · ${farm.area} Hectares`;
+          const pn = document.getElementById('appHeaderParcelName');
+          if (pn) pn.textContent = farm.parcel;
+
+          const mfName = document.getElementById('mfFarmName');
+          if (mfName) mfName.textContent = farm.name;
+          const mfLoc = document.getElementById('mfLocation');
+          if (mfLoc) mfLoc.textContent = farm.location;
+          const mfArea = document.getElementById('mfArea');
+          if (mfArea) mfArea.textContent = `${farm.area} Hectares`;
+          const mfCrop = document.getElementById('mfCrop');
+          if (mfCrop) mfCrop.textContent = farm.primaryCrop;
+          const mfVariety = document.getElementById('mfVariety');
+          if (mfVariety) mfVariety.textContent = farm.cropVariety;
+          const mfSoil = document.getElementById('mfSoil');
+          if (mfSoil) mfSoil.textContent = farm.soilType;
+
+          // Render History Table
+          const historyBody = document.getElementById('historyTableBody');
+          if (historyBody && farm.history) {
+            historyBody.innerHTML = farm.history.map(item => `
+              <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="py-3 px-4 font-mono text-xs text-on-surface-variant">${item.date}</td>
+                <td class="py-3 px-4 font-medium text-on-surface">${item.action}</td>
+                <td class="py-3 px-4 text-secondary font-medium">${item.impact}</td>
+                <td class="py-3 px-4 text-right font-bold text-on-surface">${item.score} / 100</td>
+              </tr>
+            `).join('');
+          }
+        }
+      }
+
+      // Expose switch tab and global triggers
+      window.switchTab = function (tabId) {
+        const navButtons = document.querySelectorAll('#sidebarNav button.nav-item');
+        navButtons.forEach(btn => {
+          if (btn.getAttribute('data-tab') === tabId) {
+            btn.className = 'nav-item flex items-center justify-between px-space-sm py-2 rounded-lg transition-colors bg-primary-container text-on-primary font-medium w-full text-left';
+          } else {
+            btn.className = 'nav-item flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors w-full text-left';
+          }
+        });
+
+        document.querySelectorAll('.tab-content').forEach(sec => sec.classList.add('hidden'));
+        const target = document.getElementById('tab-' + tabId);
+        if (target) target.classList.remove('hidden');
+      };
+
+      // Sidebar click listeners
+      document.querySelectorAll('#sidebarNav button[data-tab]').forEach(btn => {
+        btn.addEventListener('click', function () {
+          window.switchTab(this.getAttribute('data-tab'));
+        });
+      });
+
+      // Quick simulate button
+      const quickSim = document.getElementById('btnQuickSimulate');
+      if (quickSim) {
+        quickSim.addEventListener('click', () => window.switchTab('what-if-simulator'));
+      }
+
+      // What-If Simulator Logic in SPA
+      const slider = document.getElementById('simIrrigationSlider');
+      const readout = document.getElementById('simSliderReadout');
+      const btnUp = document.getElementById('simStepUp');
+      const btnDown = document.getElementById('simStepDown');
+      const presets = document.querySelectorAll('.sim-preset-btn');
+
+      window.setSimValue = function (val) {
+        const clamped = Math.max(6, Math.min(20, parseInt(val, 10)));
+        if (slider) slider.value = clamped;
+        if (readout) readout.textContent = clamped;
+
+        const res = window.AgroTwinState.calculateSimulation(clamped);
+        document.getElementById('spaSimHeaderLiters').textContent = `Simulated (${clamped} L/m²)`;
+        document.getElementById('spaSimWaterCell').textContent = `${res.waterUsePercent}%`;
+        document.getElementById('spaSimYieldCell').textContent = `${res.yieldPercent}%`;
+        document.getElementById('spaSimCostCell').textContent = `₹${res.cost.toLocaleString('en-IN')}`;
+        document.getElementById('spaSimScoreCell').textContent = `${res.score} / 100`;
+
+        const wb = document.getElementById('spaSimWaterBadge');
+        const wDelta = res.waterUsePercent - 100;
+        wb.textContent = `${wDelta > 0 ? '+' : ''}${wDelta}% ${wDelta > 10 ? '(Excessive)' : '(Conserving)'}`;
+        wb.className = wDelta > 10 ? 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEE2E2] text-[#DC2626]' : 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#DCFCE7] text-[#16A34A]';
+
+        const yb = document.getElementById('spaSimYieldBadge');
+        const yDelta = res.yieldPercent - 100;
+        yb.textContent = `${yDelta >= 0 ? '+' : ''}${yDelta}% (Yield)`;
+        yb.className = yDelta >= 0 ? 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#DCFCE7] text-[#16A34A]' : 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEE2E2] text-[#DC2626]';
+
+        const cb = document.getElementById('spaSimCostBadge');
+        cb.textContent = `${res.costDelta >= 0 ? '+' : ''}₹${Math.abs(res.costDelta)} (${res.costDelta >= 0 ? 'Pumping' : 'Saved'})`;
+        cb.className = res.costDelta <= 0 ? 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#DCFCE7] text-[#16A34A]' : 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEF3C7] text-[#D97706]';
+
+        const sb = document.getElementById('spaSimScoreBadge');
+        sb.textContent = `${res.scoreDelta >= 0 ? '+' : ''}${res.scoreDelta} pts`;
+        sb.className = res.scoreDelta >= 0 ? 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#DCFCE7] text-[#16A34A]' : 'inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm font-bold bg-[#FEE2E2] text-[#DC2626]';
+
+        document.getElementById('spaSimMoistureValue').textContent = `${res.anticipatedMoisture}%`;
+        const rb = document.getElementById('spaSimRiskBadge');
+        rb.textContent = res.riskLabel;
+        rb.style.color = res.riskColor;
+        rb.style.backgroundColor = res.riskBg;
+      };
+
+      if (slider) {
+        slider.addEventListener('input', (e) => window.setSimValue(e.target.value));
+        if (btnUp) btnUp.addEventListener('click', () => window.setSimValue(parseInt(slider.value, 10) + 1));
+        if (btnDown) btnDown.addEventListener('click', () => window.setSimValue(parseInt(slider.value, 10) - 1));
+      }
+
+      presets.forEach(btn => {
+        btn.addEventListener('click', function () {
+          presets.forEach(p => {
+            p.classList.remove('bg-surface-container-high', 'text-on-surface');
+            p.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+          });
+          this.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+          this.classList.add('bg-surface-container-high', 'text-on-surface');
+          window.setSimValue(this.getAttribute('data-val'));
+        });
+      });
+
+      window.applyRecommendation = function (liters) {
+        const user = window.AgroTwinState.getCurrentUser();
+        if (user) {
+          const farm = window.AgroTwinState.getUserFarm(user.userId);
+          if (farm) {
+            farm.history.unshift({
+              date: 'Just now',
+              action: `Applied ${liters} L/m² optimal recommendation`,
+              impact: 'Water use -12%, cost -₹150',
+              score: 81
+            });
+            window.AgroTwinState.saveUserFarm(user.userId, farm);
+            loadUserFarmData(user);
+            alert(`Recommendation applied!\n\nSet irrigation schedule to ${liters} L/m².\nRecorded in your Farm Action History.`);
+            window.switchTab('history');
+          }
+        }
+      };
+
+      window.showLoginView = showLogin;
+
+      // Run initial check
+      checkSession();
+      window.setSimValue(14);
+    })();
+  </script>
+</body>
+</html>

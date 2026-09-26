@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGRO-TWIN — Welcome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+          },
+          colors: {
+            surface: '#f7faf6',
+            'surface-bright': '#f7faf6',
+            'surface-container-low': '#f1f4f1',
+            'surface-container-high': '#e6eae5',
+            'surface-container-highest': '#dde2dc',
+            'forest-green': '#1e3a2f',
+            'forest-green-hover': '#152921',
+            'forest-green-light': '#2a4f40',
+            'sage-green': '#6b8f77',
+            'border-subtle': '#e2e6e2',
+            'text-charcoal': '#1a221e',
+            'text-muted': '#5c6660',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Geist', sans-serif;
+      background-color: #f7faf6;
+      color: #1a221e;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-6 sm:p-10 select-none">
+  <!-- Minimal Top Header -->
+  <header class="w-full max-w-6xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-md bg-[#1e3a2f] flex items-center justify-center text-white font-bold text-sm">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
+      </div>
+      <div class="flex items-baseline gap-2">
+        <span class="font-bold tracking-tight text-lg text-forest-green">AGRO-TWIN</span>
+        <span class="text-xs text-text-muted hidden sm:inline">Predict. Simulate. Sustain.</span>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2 text-xs text-text-muted bg-white border border-border-subtle px-3 py-1.5 rounded-md">
+      <span class="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse"></span>
+      <span>Platform v2.4 Online</span>
+    </div>
+  </header>
+
+  <!-- Login Card Container -->
+  <main class="w-full max-w-[460px] mx-auto my-auto py-10">
+    <div class="bg-white border border-border-subtle rounded-xl p-8 sm:p-10 shadow-[0_4px_20px_-8px_rgba(30,58,47,0.06)]">
+      
+      <!-- Logo & Title Section -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[#1e3a2f] text-white shadow-sm mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight text-forest-green">Welcome to AGRO-TWIN</h1>
+        <p class="text-sm text-text-muted mt-2">Your intelligent agricultural sustainability companion.</p>
+      </div>
+
+      <!-- Human-readable error banner -->
+      <div id="errorBanner" class="hidden mb-5 p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2">
+        <span class="material-symbols-outlined text-base text-red-600">error</span>
+        <span id="errorMessage">Please complete the required fields.</span>
+      </div>
+
+      <!-- Authentication / Onboarding Form -->
+      <form id="onboardingForm" class="space-y-5" novalidate>
+        <div>
+          <label for="fullName" class="block text-xs font-semibold uppercase tracking-wider text-text-charcoal mb-1.5">
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal placeholder-text-muted/60 transition-colors"
+          />
+          <p id="nameError" class="hidden mt-1 text-xs text-red-600">Please enter your name.</p>
+        </div>
+
+        <div>
+          <label for="phoneNumber" class="block text-xs font-semibold uppercase tracking-wider text-text-charcoal mb-1.5">
+            Phone Number
+          </label>
+          <div class="relative">
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="Enter your phone number (e.g. 9876543210)"
+              autocomplete="tel"
+              class="w-full px-3.5 py-2.5 text-sm bg-white border border-border-subtle rounded-lg focus:outline-none focus:ring-1 focus:ring-forest-green focus:border-forest-green text-text-charcoal placeholder-text-muted/60 transition-colors"
+            />
+          </div>
+          <p id="phoneError" class="hidden mt-1 text-xs text-red-600">Please enter a valid 10-digit phone number.</p>
+          <p class="mt-1 text-[11px] text-text-muted">Accepts 10-digit Indian mobile number (optional +91).</p>
+        </div>
+
+        <button
+          type="submit"
+          id="continueBtn"
+          class="w-full py-3 px-4 rounded-lg bg-[#1e3a2f] hover:bg-[#152921] text-white font-semibold text-sm tracking-tight transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-forest-green/30 flex items-center justify-center gap-2"
+        >
+          <span>Continue</span>
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- Clean Trust Indicators -->
+      <div class="mt-8 pt-6 border-t border-border-subtle flex items-center justify-around text-xs text-text-muted">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-forest-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <span>Data Isolated</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-forest-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          <span>Agronomic Security</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Clean Footer -->
+  <footer class="w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-text-muted border-t border-border-subtle pt-6 gap-3">
+    <div>
+      © 2026 AGRO-TWIN. Predict. Simulate. Optimize. Sustain.
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Agronomic Sustainability Platform</span>
+      <span>·</span>
+      <span>Field Telemetry</span>
+    </div>
+  </footer>
+
+  <script src="../js/agroTwinState.js"></script><script src="../../js/agroTwinState.js"></script>
+  <script>
+    (function () {
+      // Check if session already exists for returning user
+      const existingUser = window.AgroTwinState ? window.AgroTwinState.getCurrentUser() : null;
+      if (existingUser && existingUser.name) {
+        // Redirect directly to dashboard for returning user
+        window.location.href = '../farm_overview/code.html';
+        return;
+      }
+
+      const form = document.getElementById('onboardingForm');
+      const nameInput = document.getElementById('fullName');
+      const phoneInput = document.getElementById('phoneNumber');
+      const errorBanner = document.getElementById('errorBanner');
+      const errorMessage = document.getElementById('errorMessage');
+      const nameError = document.getElementById('nameError');
+      const phoneError = document.getElementById('phoneError');
+
+      function hideErrors() {
+        errorBanner.classList.add('hidden');
+        nameError.classList.add('hidden');
+        phoneError.classList.add('hidden');
+        nameInput.classList.remove('border-red-500');
+        phoneInput.classList.remove('border-red-500');
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        hideErrors();
+
+        const rawName = nameInput.value;
+        const rawPhone = phoneInput.value;
+
+        const validation = window.AgroTwinState
+          ? window.AgroTwinState.validate(rawName, rawPhone)
+          : { valid: rawName.trim().length >= 2, name: rawName.trim(), phone: rawPhone.trim() };
+
+        if (!validation.valid) {
+          errorBanner.classList.remove('hidden');
+          errorMessage.textContent = validation.message;
+
+          if (validation.message.includes('name')) {
+            nameError.classList.remove('hidden');
+            nameInput.classList.add('border-red-500');
+            nameInput.focus();
+          } else {
+            phoneError.classList.remove('hidden');
+            phoneInput.classList.add('border-red-500');
+            phoneInput.focus();
+          }
+          return;
+        }
+
+        // Form is valid! Extract names
+        const fullName = validation.name;
+        const cleanPhone = validation.phone;
+        const firstName = fullName.split(/\s+/)[0];
+        const userId = 'usr_' + cleanPhone;
+
+        const userProfile = {
+          userId: userId,
+          name: fullName,
+          firstName: firstName,
+          phone: cleanPhone,
+          initials: window.AgroTwinState.getInitials(fullName),
+          createdAt: new Date().toISOString(),
+          isReturning: true
+        };
+
+        // Save session
+        if (window.AgroTwinState) {
+          window.AgroTwinState.setCurrentUser(userProfile);
+          // Initialize user's farm data
+          window.AgroTwinState.getUserFarm(userId);
+        }
+
+        // Redirect to dashboard
+        window.location.href = '../farm_overview/code.html';
+      });
+    })();
+  </script>
+</body>
+</html>
